@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Guidance Department - Job Portal</title>
+    <link rel="stylesheet" type="text/css" href="css/homepage.css">
+</head>
+<body>
+    <header>
+      <a href="#" class="logo">Starboard</a>
+      <nav>
+
+        <ul>
+          <li><a href="#">Jobs</a></li>
+          <li><a href="#">Applications</a></li>
+
+        </ul>
+    </nav>
+    </header>
+
+  <div class="wrapper">
+    <section class="hero">
+      <div class = primary> </div>
+    </section>
+    <section class="sidebar">
+     <div class="inner">
+      <div class="clipper">
+        <h2>Starboard</h2>
+
+      <div class="anim-panel">
+        <h5>Are you looking for a business or are you a business owner?</h5>
+      </div>
+     </div>
+    </section>
+    <section class="signup">
+      <div class="inner">
+        <div class="clipper">
+        </div>
+        <div class="anim-panel">
+          <a href="student_login.html"><button class="cta"> I am looking for businesses </button></a>
+          <a href="employer_login.html"><button class="cta"> I am a business </button></a>
+        </div>
+      </div>
+    </section>
+    </div>
+    
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+    <script> 
+
+      document.addEventListener("DOMContentLoaded", function(event){
+          window.addEventListener("load", function(e) {
+            
+            document.body.style.display = "block";
+            
+            
+            var tl = new TimelineMax();
+
+            tl.staggerFrom('section', 2,{
+              opacity: 0,
+              scale: .5, 
+              ease: Power2.easeOut
+            }, 0.2)
+
+            tl.staggerFrom('h1, h2', .5, {
+              opacity: 0,
+              y: -40,
+              ease: Power2.easeInOut
+
+            }, 0.2, "-=2")
+
+            tl.staggerFrom('.anim-panel', 1, {
+              opacity: 0,
+              y: -40,
+              ease: Power2.easeInOut
+
+            }, 0.2, "-=1.5")
+
+          }, false);
+
+      });
+
+ 
+    </script>
+</body>
+</html>
