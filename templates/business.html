@@ -1,256 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Local Businesses</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/business.css" />
   <style>
-    /* TEMP extra styles in case your style.css isn't loading everything */
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f5f6fa;
-      margin: 0;
-      padding: 0;
-      color: #333;
-    }
-    header {
-      background: #004aad;
-      color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    header h1 { margin: 0; }
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 1.5rem;
-      font-weight: 500;
-    }
-    .filters {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin: 1.5rem 0;
-    }
-    select {
-      padding: 0.5rem;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-    .business-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      padding: 0 2rem 2rem;
-    }
-    .card {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      padding: 1rem;
-      transition: transform 0.2s;
-    }
-    .card:hover { transform: translateY(-4px); }
-    .card h3 {
-      margin: 0.5rem 0;
-      color: #004aad;
-    }
-    .deal {
-      color: #27ae60;
-      font-weight: bold;
-    }
-    .bookmark-btn {
-      background: none;
-      border: none;
-      color: #ff9800;
-      font-size: 1.2rem;
-      cursor: pointer;
-      float: right;
-    }
+    body { font-family: Arial; background: #f5f6fa; margin: 0; padding: 0; }
+    header { background: #004aad; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; }
+    nav a { color: white; text-decoration: none; margin-left: 1rem; }
+    .filters { display: flex; justify-content: center; gap: 1rem; margin: 1rem; }
+    select { padding: 0.5rem; border-radius: 6px; }
+    .business-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; padding: 1rem 2rem; }
+    .card { background: white; padding: 1rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .card h3 { margin: 0.5rem 0; color: #004aad; }
+    .deal { color: #27ae60; font-weight: bold; }
+    .star { color: #b8b8b8; cursor: pointer; user-select: none; font-size: 1.2rem; }
+    .star.selected { color: #FFD700; }
+    textarea { width: 100%; margin-top: 0.5rem; padding: 0.5rem; border-radius: 6px; }
+    .submit-review-btn { margin-top: 0.5rem; padding: 0.4rem 0.8rem; border: none; border-radius: 6px; cursor: pointer; background: #004aad; color: white; }
+    .submit-review-btn:hover { background: #003380; }
+    .bookmark-btn { background: none; border: none; cursor: pointer; font-size: 1.2rem; color: #ff9800; float: right; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Local Businesses</h1>
-    <nav>
-      <a href="business_home.html">Home</a>
-      <a href="post.html">Post Job</a>
-      <a href="businesses.html">Businesses</a>
-      <a href="admin.html">Admin</a>
-    </nav>
-  </header>
 
-  <div class="filters">
-    <select id="sortSelect">
-      <option value="">Sort By</option>
-      <option value="name">Name (A–Z)</option>
-      <option value="rating">Rating (High–Low)</option>
-    </select>
-    <select id="categorySelect">
-      <option value="">All Categories</option>
-      <option value="food">Food</option>
-      <option value="retail">Retail</option>
-      <option value="tech">Tech</option>
-    </select>
-  </div>
+<header>
+  <h1>Local Businesses</h1>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Businesses</a>
+    <a href="#">Admin</a>
+  </nav>
+</header>
 
-  <section class="login-section">
-    <h2>User Login</h2>
-    <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Password" />
-    <button id="loginBtn">Login</button>
-    <button id="signupBtn">Sign Up</button>
-    <p id="loginStatus"></p>
-  </section>
+<div class="filters">
+  <select id="sortSelect">
+    <option value="">Sort By</option>
+    <option value="name">Name (A–Z)</option>
+    <option value="rating">Rating (High–Low)</option>
+  </select>
+  <select id="categorySelect">
+    <option value="">All Categories</option>
+    <option value="food">Food</option>
+    <option value="retail">Retail</option>
+    <option value="tech">Tech</option>
+  </select>
+</div>
 
-  <div class="business-grid" id="businessGrid">
-    <!-- Cards inserted by JS -->
-  </div>
+<div class="business-grid" id="businessGrid"></div>
 
-  <script type="module" src="js/firebase-config.js"></script>
-  <script type="module" src="js/business.js"></script>
-  <script>
-    
-    const businesses = [
-      { name: "Blueberry Cafe", category: "food", deal: "10% off pastries", rating: 4.7, reviews: [] },
-      { name: "TechWave Solutions", category: "tech", deal: "Free consultation", rating: 4.9, reviews: [] },
-      { name: "Trendy Threads", category: "retail", deal: "Buy 1 Get 1 Half Off", rating: 4.3, reviews: [] },
-      { name: "GreenLeaf Market", category: "food", deal: "5% off groceries", rating: 4.6, reviews: [] },
-    ];
+<script>
+const businesses = [
+  { name: "Blueberry Cafe", category: "food", deal: "10% off pastries", rating: 4.7, reviews: [] },
+  { name: "TechWave Solutions", category: "tech", deal: "Free consultation", rating: 4.9, reviews: [] },
+  { name: "Trendy Threads", category: "retail", deal: "Buy 1 Get 1 Half Off", rating: 4.3, reviews: [] },
+  { name: "GreenLeaf Market", category: "food", deal: "5% off groceries", rating: 4.6, reviews: [] },
+];
 
-    const grid = document.getElementById("businessGrid");
+const grid = document.getElementById("businessGrid");
+const selectedStars = {};
 
-    function renderBusinesses(list) {
-      grid.innerHTML = "";
-      list.forEach(b => {
-        const card = document.createElement("div");
-        card.className = "card";
+function renderBusinesses(list) {
+  grid.innerHTML = "";
+  list.forEach(b => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <button class="bookmark-btn" onclick="alert('Bookmarked ${b.name}!')">★</button>
+      <h3>${b.name}</h3>
+      <p>Category: ${b.category}</p>
+      <p class="deal">${b.deal}</p>
+      <p>⭐ ${b.rating.toFixed(1)}</p>
+      <div class="review-form">
+        <div class="stars" id="stars-${b.name}">${[1,2,3,4,5].map(i => `<span class="star" data-value="${i}">★</span>`).join('')}</div>
+        <textarea id="reviewText-${b.name}" rows="2" placeholder="Write your review..."></textarea>
+        <button class="submit-review-btn" data-name="${b.name}">Submit</button>
+      </div>
+      <div id="reviews-${b.name}"></div>
+    `;
+    grid.appendChild(card);
 
-        const avgRating = b.reviews.length
-          ? (b.reviews.reduce((a, r) => a + r.stars, 0) / b.reviews.length).toFixed(1)
-          : b.rating.toFixed(1);
-
-        card.innerHTML = `
-          <button class="bookmark-btn" onclick="toggleBookmark('${b.name}')">★</button>
-          <h3>${b.name}</h3>
-          <p>Category: ${b.category}</p>
-          <p class="deal">${b.deal}</p>
-          <p>⭐ ${avgRating}</p>
-          <div class="review-form">
-            <p>Leave a Review:</p>
-            <div class="stars">
-              ${[1,2,3,4,5].map(() => `<span class="star">★</span>`).join("")}
-            </div>
-            <textarea id="reviewText-${b.name}" rows="2" placeholder="Write your review..."></textarea>
-            <button class="submit-review" data-name="${b.name}">Submit</button>
-          </div>
-          <div id="reviews-${b.name}" class="reviews">
-            ${b.reviews.map(r => `<p>⭐${r.stars} — ${r.text}</p>`).join("")}
-          </div>
-        `;
-        grid.appendChild(card);
-
-        attachStarEvents(b.name);
-      });
-
-      attachSubmitEvents(); // attach submit buttons after rendering all cards
-    }
-
-
-
-    function sortBusinesses(type) {
-      let sorted = [...businesses];
-      if (type === "name") sorted.sort((a, b) => a.name.localeCompare(b.name));
-      if (type === "rating") sorted.sort((a, b) => b.rating - a.rating);
-      renderBusinesses(sorted);
-    }
-
-    function filterCategory(cat) {
-      const filtered = cat ? businesses.filter(b => b.category === cat) : businesses;
-      renderBusinesses(filtered);
-    }
-
-    document.getElementById("sortSelect").addEventListener("change", e => sortBusinesses(e.target.value));
-    document.getElementById("categorySelect").addEventListener("change", e => filterCategory(e.target.value));
-
-    function toggleBookmark(name) {
-      alert(`Bookmarked ${name}! (In final version this would save to local storage.)`);
-    }
-
-    function openReviewForm(name) {
-      const reviewText = prompt(`Leave a review for ${name}:`);
-      if (reviewText === null) return;
-
-      const stars = parseInt(prompt("Rate out of 5 (1–5):"));
-      if (isNaN(stars) || stars < 1 || stars > 5) {
-        alert("Please enter a whole number between 1 and 5.");
-        return;
-      }
-
-      const biz = businesses.find(b => b.name === name);
-      biz.reviews.push({ text: reviewText, stars });
-
-      // Update average rating
-      const avg =
-        biz.reviews.reduce((a, r) => a + r.stars, 0) / biz.reviews.length;
-      biz.rating = parseFloat(avg.toFixed(1));
-
-      renderBusinesses(businesses);
-    }
-
-    function toggleReviews(name) {
-      const section = document.getElementById(`reviews-${name}`);
-      const btn = section.previousElementSibling; // the button right before it
-
-      if (section.style.display === "none") {
-        section.style.display = "block";
-        btn.textContent = "Hide Reviews";
-      } else {
-        section.style.display = "none";
-        btn.textContent = "Show Reviews";
-      }
-    }
-
-    const selectedStars = {};
-
-  function selectStar(name, value) {
-    selectedStars[name] = value;
-    const stars = document.querySelectorAll(`#stars-${name} .star`);
-    stars.forEach((s, i) => {
-      if (i < value) s.classList.add("selected");
-      else s.classList.remove("selected");
+    // Attach star click events
+    const starElements = card.querySelectorAll(".star");
+    starElements.forEach(star => {
+      star.onclick = () => {
+        const value = parseInt(star.dataset.value);
+        selectedStars[b.name] = value;
+        starElements.forEach(s => s.classList.remove("selected"));
+        for(let i=0; i<value; i++) starElements[i].classList.add("selected");
+      };
     });
-  }
 
-  function submitReview(name) {
-    const textArea = document.getElementById(`reviewText-${name}`);
-    const text = textArea.value.trim();
-    const stars = selectedStars[name];
+    // Attach submit review event
+    const submitBtn = card.querySelector(".submit-review-btn");
+    submitBtn.onclick = () => {
+      const textArea = document.getElementById(`reviewText-${b.name}`);
+      const text = textArea.value.trim();
+      const stars = selectedStars[b.name];
+      if(!text || !stars) return alert("Add both review and star rating");
+      b.reviews.push({ text, stars });
+      b.rating = b.reviews.reduce((a,r)=>a+r.stars,0)/b.reviews.length;
+      textArea.value = "";
+      selectedStars[b.name] = null;
+      renderBusinesses(businesses);
+    };
+  });
+}
 
-    if (!text || !stars) {
-      alert("Please add both a review and a star rating.");
-      return;
-    }
+renderBusinesses(businesses);
 
-    const biz = businesses.find(b => b.name.replace(/\s+/g,'') === name);
-    biz.reviews.push({ text, stars });
+document.getElementById("sortSelect").addEventListener("change", e => {
+  let sorted = [...businesses];
+  if(e.target.value === "name") sorted.sort((a,b)=>a.name.localeCompare(b.name));
+  if(e.target.value === "rating") sorted.sort((a,b)=>b.rating - a.rating);
+  renderBusinesses(sorted);
+});
 
-    // Update average rating
-    const avg = biz.reviews.reduce((a,r) => a+r.stars,0)/biz.reviews.length;
-    biz.rating = parseFloat(avg.toFixed(1));
-
-    textArea.value = "";
-    selectedStars[name] = null;
-
-    renderBusinesses(businesses);
-  }
-
-
-    renderBusinesses(businesses);
-  </script>
+document.getElementById("categorySelect").addEventListener("change", e => {
+  const filtered = e.target.value ? businesses.filter(b=>b.category===e.target.value) : businesses;
+  renderBusinesses(filtered);
+});
+</script>
 </body>
 </html>
