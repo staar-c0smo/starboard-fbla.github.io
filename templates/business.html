@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Local Businesses</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* TEMP extra styles in case your style.css isn't loading everything */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f6fa;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background: #004aad;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 { margin: 0; }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-weight: 500;
+    }
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    select {
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .business-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 0 2rem 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      transition: transform 0.2s;
+    }
+    .card:hover { transform: translateY(-4px); }
+    .card h3 {
+      margin: 0.5rem 0;
+      color: #004aad;
+    }
+    .deal {
+      color: #27ae60;
+      font-weight: bold;
+    }
+    .bookmark-btn {
+      background: none;
+      border: none;
+      color: #ff9800;
+      font-size: 1.2rem;
+      cursor: pointer;
+      float: right;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Local Businesses</h1>
+    <nav>
+      <a href="business_home.html">Home</a>
+      <a href="post.html">Post Job</a>
+      <a href="businesses.html">Businesses</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
+  <div class="filters">
+    <select id="sortSelect">
+      <option value="">Sort By</option>
+      <option value="name">Name (A–Z)</option>
+      <option value="rating">Rating (High–Low)</option>
+    </select>
+    <select id="categorySelect">
+      <option value="">All Categories</option>
+      <option value="food">Food</option>
+      <option value="retail">Retail</option>
+      <option value="tech">Tech</option>
+    </select>
+  </div>
+
+  <section class="login-section">
+    <h2>User Login</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button id="loginBtn">Login</button>
+    <button id="signupBtn">Sign Up</button>
+    <p id="loginStatus"></p>
+  </section>
+
+  <div class="business-grid" id="businessGrid">
+    <!-- Cards inserted by JS -->
+  </div>
+
+  <script type="module" src="js/firebase-config.js"></script>
+  <script type="module" src="js/business.js"></script>
+  <script>
+    
+    const businesses = [
+      { name: "Blueberry Café", category: "food", deal: "10% off pastries", rating: 4.7 },
+      { name: "TechWave Solutions", category: "tech", deal: "Free consultation", rating: 4.9 },
+      { name: "Trendy Threads", category: "retail", deal: "Buy 1 Get 1 Half Off", rating: 4.3 },
+      { name: "GreenLeaf Market", category: "food", deal: "5% off groceries", rating: 4.6 },
+    ];
+
+    const grid = document.getElementById("businessGrid");
+
+    function renderBusinesses(list) {
+      grid.innerHTML = "";
+      list.forEach(b => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <button class="bookmark-btn" onclick="toggleBookmark('${b.name}')">★</button>
+          <h3>${b.name}</h3>
+          <p>Category: ${b.category}</p>
+          <p class="deal">${b.deal}</p>
+          <p>⭐ ${b.rating}</p>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function sortBusinesses(type) {
+      let sorted = [...businesses];
+      if (type === "name") sorted.sort((a, b) => a.name.localeCompare(b.name));
+      if (type === "rating") sorted.sort((a, b) => b.rating - a.rating);
+      renderBusinesses(sorted);
+    }
+
+    function filterCategory(cat) {
+      const filtered = cat ? businesses.filter(b => b.category === cat) : businesses;
+      renderBusinesses(filtered);
+    }
+
+    document.getElementById("sortSelect").addEventListener("change", e => sortBusinesses(e.target.value));
+    document.getElementById("categorySelect").addEventListener("change", e => filterCategory(e.target.value));
+
+    function toggleBookmark(name) {
+      alert(`Bookmarked ${name}! (In final version this would save to local storage.)`);
+    }
+
+    renderBusinesses(businesses);
+  </script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap");
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: #f7f9fc;
+  margin: 0;
+  color: #222;
+}
+
+header {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #333;
+}
+
+nav a {
+  text-decoration: none;
+  color: #444;
+  margin: 0 0.8rem;
+  font-weight: 600;
+}
+
+nav a.active {
+  color: #007bff;
+}
+
+nav a:hover {
+  color: #0056b3;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem auto;
+  flex-wrap: wrap;
+}
+
+.controls label {
+  font-weight: bold;
+  color: #333;
+}
+
+select {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-family: "Montserrat", sans-serif;
+}
+
+.business-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 0 2rem 3rem;
+}
+
+.business-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+  text-align: left;
+}
+
+.business-card:hover {
+  transform: translateY(-4px);
+}
+
+.business-card h3 {
+  color: #222;
+  margin-top: 0;
+}
+
+.business-card p {
+  margin: 0.4rem 0;
+}
+
+.rating {
+  color: #f39c12;
+}
+
+.button-group {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+button {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+button.bookmark {
+  background: #007bff;
+  color: white;
+}
+
+button.bookmark:hover {
+  background: #0056b3;
+}
+
+button.review-btn {
+  background: #ffa500;
+  color: white;
+}
+
+button.review-btn:hover {
+  background: #cc8400;
+}
+
+footer {
+  background: #fff;
+  text-align: center;
+  padding: 1rem;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+  font-size: 0.9rem;
+}
