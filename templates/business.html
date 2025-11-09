@@ -71,13 +71,19 @@ function renderBusinesses(list) {
       <p>Category: ${b.category}</p>
       <p class="deal">${b.deal}</p>
       <p>⭐ ${b.rating.toFixed(1)}</p>
+
       <div class="review-form">
         <div class="stars" id="stars-${b.name}">${[1,2,3,4,5].map(i => `<span class="star" data-value="${i}">★</span>`).join('')}</div>
         <textarea id="reviewText-${b.name}" rows="2" placeholder="Write your review..."></textarea>
         <button class="submit-review-btn" data-name="${b.name}">Submit</button>
       </div>
-      <div id="reviews-${b.name}"></div>
+
+      <div class="reviews" id="reviews-${b.name}">
+        ${b.reviews.map(r => `<p>⭐${r.stars} — ${r.text}</p>`).join('')}
+      </div>
     `;
+
+
     grid.appendChild(card);
 
     // Attach star click events

@@ -136,16 +136,26 @@ function attachSubmitEvents() {
       biz.reviews.push({ text, stars });
 
       // Update average rating
-      const avg = biz.reviews.reduce((a,r) => a+r.stars,0)/biz.reviews.length;
-      biz.rating = parseFloat(avg.toFixed(1));
+      biz.rating = parseFloat((biz.reviews.reduce((a,r)=>a+r.stars,0)/biz.reviews.length).toFixed(1));
 
+      // Clear input
       textArea.value = "";
       selectedStars[name] = null;
 
-      renderBusinesses(businesses);
+      // Append the new review instead of replacing
+      const reviewsDiv = document.getElementById(`reviews-${biz.name}`);
+      const newReviewP = document.createElement("p");
+      newReviewP.textContent = `⭐${stars} — ${text}`;
+      reviewsDiv.appendChild(newReviewP);
+
+      // Update displayed average rating
+      const avgRatingP = btn.closest(".card").querySelector("p:nth-of-type(4)");
+      avgRatingP.textContent = `⭐ ${biz.rating}`;
     };
   });
 }
+
+
 
 // === Bookmark Events ===
 function attachBookmarkEvents() {
