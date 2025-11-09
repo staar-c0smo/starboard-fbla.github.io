@@ -5,21 +5,300 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Local Businesses</title>
   <style>
-    body { font-family: Arial; background: #f5f6fa; margin: 0; padding: 0; }
-    header { background: #004aad; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; }
-    nav a { color: white; text-decoration: none; margin-left: 1rem; }
-    .filters { display: flex; justify-content: center; gap: 1rem; margin: 1rem; }
-    select { padding: 0.5rem; border-radius: 6px; }
-    .business-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; padding: 1rem 2rem; }
-    .card { background: white; padding: 1rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    .card h3 { margin: 0.5rem 0; color: #004aad; }
-    .deal { color: #27ae60; font-weight: bold; }
-    .star { color: #b8b8b8; cursor: pointer; user-select: none; font-size: 1.2rem; }
-    .star.selected { color: #FFD700; }
-    textarea { width: 100%; margin-top: 0.5rem; padding: 0.5rem; border-radius: 6px; }
-    .submit-review-btn { margin-top: 0.5rem; padding: 0.4rem 0.8rem; border: none; border-radius: 6px; cursor: pointer; background: #004aad; color: white; }
-    .submit-review-btn:hover { background: #003380; }
-    .bookmark-btn { background: none; border: none; cursor: pointer; font-size: 1.2rem; color: #ff9800; float: right; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background: #f8fafc; 
+      margin: 0; 
+      padding: 0;
+      color: #334155;
+    }
+
+    header { 
+      background: linear-gradient(135deg, #0051c3 0%, #004aad 100%);
+      color: white; 
+      padding: 1.25rem 2.5rem;
+      display: flex; 
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 15px rgba(0, 74, 173, 0.15);
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    nav a { 
+      color: white; 
+      text-decoration: none; 
+      margin-left: 1.5rem;
+      font-weight: 500;
+      opacity: 0.9;
+      transition: opacity 0.2s;
+    }
+
+    nav a:hover {
+      opacity: 1;
+    }
+
+    .filters { 
+      display: flex; 
+      justify-content: center; 
+      gap: 1rem; 
+      margin: 2rem auto;
+      max-width: 600px;
+      padding: 0 1rem;
+    }
+
+    select { 
+      padding: 0.625rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      background-color: white;
+      color: #334155;
+      font-family: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-width: 140px;
+    }
+
+    select:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .business-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+      gap: 2rem; 
+      padding: 1rem 2.5rem 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .card { 
+      background: white; 
+      padding: 1.5rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      border: 1px solid rgba(0,0,0,0.04);
+      box-sizing: border-box;  /* Include padding in width calculation */
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    .card h3 { 
+      margin: 0.75rem 0; 
+      color: #0051c3;
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+
+    .deal { 
+      color: #16a34a;
+      font-weight: 600;
+      background: #f0fdf4;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      display: inline-block;
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+    }
+
+    .star { 
+      color: #cbd5e1; 
+      cursor: pointer; 
+      user-select: none; 
+      font-size: 1.25rem;
+      transition: color 0.2s;
+    }
+
+    .star:hover {
+      color: #fbbf24;
+    }
+
+    .star.selected { 
+      color: #f59e0b;
+    }
+
+    textarea { 
+      width: calc(100% - 1.5rem);  /* Subtract padding from width */
+      margin-top: 0.75rem;
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 80px;
+      transition: border-color 0.2s;
+      box-sizing: border-box;  /* Include padding in width calculation */
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #0051c3;
+      box-shadow: 0 0 0 3px rgba(0,81,195,0.1);
+    }
+
+    .submit-review-btn { 
+      margin-top: 0.75rem;
+      padding: 0.625rem 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #0051c3;
+      color: white;
+      font-weight: 500;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .submit-review-btn:hover { 
+      background: #003d96;
+      transform: translateY(-1px);
+    }
+
+    .bookmark-btn { 
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.4rem;
+      color: #cbd5e1;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      transition: all 0.2s;
+      padding: 0.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+    }
+
+    .bookmark-btn:hover { 
+      color: #ff0000;
+      background: rgba(255,0,0,0.1);
+    }
+
+    .bookmark-btn.favorited { 
+      color: #ff0000;
+      background: rgba(255,0,0,0.1);
+    }
+
+    .reviews {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e2e8f0;
+      display: none;  /* Hidden by default */
+    }
+
+    .reviews.show {
+      display: block;  /* Show when class is added */
+    }
+
+    .reviews p {
+      background: #f8fafc;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+    }
+
+    .toggle-reviews-btn {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      color: #0051c3;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 1.25rem;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .toggle-reviews-btn:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      transform: translateY(-1px);
+    }
+
+    .toggle-reviews-btn .review-count {
+      background: #f0f7ff;
+      color: #0051c3;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .toggle-reviews-btn .icon {
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      color: #94a3b8;
+      font-size: 0.8rem;
+    }
+
+    .toggle-reviews-btn.active {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    .toggle-reviews-btn.active .icon {
+      transform: rotate(180deg);
+      color: #0051c3;
+    }
+
+    .toggle-reviews-btn .button-content {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .category-tag {
+      font-size: 0.85rem;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+
+    .rating-display {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: #64748b;
+      font-size: 0.9rem;
+      margin: 0.5rem 0;
+    }
+
+    .rating-display span {
+      color: #f59e0b;
+    }
+
+    .review-form {
+      margin-top: 1.5rem;
+      width: 100%;
+      box-sizing: border-box;  /* Include padding in width calculation */
+    }
   </style>
 </head>
 <body>
@@ -44,7 +323,7 @@
     <option value="food">Food</option>
     <option value="retail">Retail</option>
     <option value="tech">Tech</option>
-    <option value="favorites">Bookmarked</option>
+    <option value="favorites">Favorites</option>
   </select>
 </div>
 
@@ -52,10 +331,10 @@
 
 <script>
 const businesses = [
-  { name: "Blueberry Cafe", category: "food", deal: "10% off pastries", rating: 4.7, reviews: [] },
-  { name: "TechWave Solutions", category: "tech", deal: "Free consultation", rating: 4.9, reviews: [] },
-  { name: "Trendy Threads", category: "retail", deal: "Buy 1 Get 1 Half Off", rating: 4.3, reviews: [] },
-  { name: "GreenLeaf Market", category: "food", deal: "5% off groceries", rating: 4.6, reviews: [] },
+  { name: "Blueberry Cafe", category: "food", deal: "10% off pastries", rating: 4.7, reviews: [], favorite: true },
+  { name: "TechWave Solutions", category: "tech", deal: "Free consultation", rating: 4.9, reviews: [], favorite: false },
+  { name: "Trendy Threads", category: "retail", deal: "Buy 1 Get 1 Half Off", rating: 4.3, reviews: [], favorite: false },
+  { name: "GreenLeaf Market", category: "food", deal: "5% off groceries", rating: 4.6, reviews: [], favorite: false },
 ];
 
 const grid = document.getElementById("businessGrid");
@@ -67,17 +346,25 @@ function renderBusinesses(list) {
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `
-      <button class="bookmark-btn" onclick="alert('Bookmarked ${b.name}!')">★</button>
+      <button class="bookmark-btn ${b.favorite ? 'favorited' : ''}" data-name="${b.name}">♥</button>
       <h3>${b.name}</h3>
-      <p>Category: ${b.category}</p>
+      <span class="category-tag">${b.category.charAt(0).toUpperCase() + b.category.slice(1)}</span>
       <p class="deal">${b.deal}</p>
-      <p>⭐ ${b.rating.toFixed(1)}</p>
+      <p class="rating-display"><span>⭐</span> ${b.rating.toFixed(1)}</p>
 
       <div class="review-form">
         <div class="stars" id="stars-${b.name}">${[1,2,3,4,5].map(i => `<span class="star" data-value="${i}">★</span>`).join('')}</div>
         <textarea id="reviewText-${b.name}" rows="2" placeholder="Write your review..."></textarea>
         <button class="submit-review-btn" data-name="${b.name}">Submit</button>
       </div>
+
+      <button class="toggle-reviews-btn" data-target="reviews-${b.name}">
+        <div class="button-content">
+          <span>Show Reviews</span>
+          <span class="icon">▼</span>
+        </div>
+        <span class="review-count">${b.reviews.length} ${b.reviews.length === 1 ? 'review' : 'reviews'}</span>
+      </button>
 
       <div class="reviews" id="reviews-${b.name}">
         ${b.reviews.map(r => `<p>⭐${r.stars} — ${r.text}</p>`).join('')}
@@ -123,9 +410,49 @@ document.getElementById("sortSelect").addEventListener("change", e => {
   renderBusinesses(sorted);
 });
 
+// Add bookmark click handler
+function handleBookmarkClick(businessName) {
+  const business = businesses.find(b => b.name === businessName);
+  if (business) {
+    business.favorite = !business.favorite;
+    renderBusinesses(getCurrentlyDisplayedBusinesses());
+  }
+}
+
 document.getElementById("categorySelect").addEventListener("change", e => {
-  const filtered = e.target.value ? businesses.filter(b=>b.category===e.target.value) : businesses;
-  renderBusinesses(filtered);
+  renderBusinesses(getCurrentlyDisplayedBusinesses());
+});
+
+// Helper function to get currently displayed businesses based on category
+function getCurrentlyDisplayedBusinesses() {
+  const category = document.getElementById("categorySelect").value;
+  if (category === "favorites") {
+    return businesses.filter(b => b.favorite);
+  }
+  return category ? businesses.filter(b => b.category === category) : businesses;
+}
+
+// Event delegation for bookmark buttons
+document.getElementById("businessGrid").addEventListener("click", e => {
+  // Handle bookmark clicks
+  if (e.target.classList.contains("bookmark-btn")) {
+    handleBookmarkClick(e.target.dataset.name);
+  }
+  
+  // Handle review toggle clicks
+  if (e.target.closest(".toggle-reviews-btn")) {
+    const btn = e.target.closest(".toggle-reviews-btn");
+    const reviewsId = btn.dataset.target;
+    const reviewsDiv = document.getElementById(reviewsId);
+    
+    // Toggle reviews visibility
+    reviewsDiv.classList.toggle("show");
+    btn.classList.toggle("active");
+    
+    // Update button text
+    const textSpan = btn.querySelector("span");
+    textSpan.textContent = reviewsDiv.classList.contains("show") ? "Hide Reviews" : "Show Reviews";
+  }
 });
 </script>
 </body>

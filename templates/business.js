@@ -43,14 +43,6 @@ onAuthStateChanged(auth, user => {
   }
 });
 
-// === Business Data ===
-const businesses = [
-  { name: "Blueberry Cafe", category: "food", deal: "10% off pastries", rating: 4.7, reviews: [], favorite: false },
-  { name: "TechWave Solutions", category: "tech", deal: "Free consultation", rating: 4.9, reviews: [], favorite: false },
-  { name: "Trendy Threads", category: "retail", deal: "Buy 1 Get 1 Half Off", rating: 4.3, reviews: [], favorite: false },
-  { name: "GreenLeaf Market", category: "food", deal: "5% off groceries", rating: 4.6, reviews: [], favorite: false },
-];
-
 
 // === DOM Elements ===
 const grid = document.getElementById("businessGrid");
@@ -60,21 +52,17 @@ const selectedStars = {};
 function renderBusinesses(list) {
   grid.innerHTML = "";
 
-  const bookmarkBtn = card.querySelector(".bookmark-btn");
-  bookmarkBtn.style.color = b.favorite ? "#FFD700" : "#ff9800";
-
-
   list.forEach(b => {
-    const safeName = b.name.replace(/\s+/g,''); // for IDs
+    const safeName = b.name.replace(/\s+/g, ''); // for IDs
     const avgRating = b.reviews.length
-      ? (b.reviews.reduce((a,r) => a+r.stars,0)/b.reviews.length).toFixed(1)
+      ? (b.reviews.reduce((a, r) => a + r.stars, 0) / b.reviews.length).toFixed(1)
       : b.rating.toFixed(1);
 
     const card = document.createElement("div");
     card.className = "card";
 
     card.innerHTML = `
-      <button class="bookmark-btn" data-name="${b.name}">★</button>
+      <button class="bookmark-btn" data-name="${b.name}" style="color: ${b.favorite ? "#FFD700" : "#ff9800"};">★</button>
       <h3>${b.name}</h3>
       <p>Category: ${b.category}</p>
       <p class="deal">${b.deal}</p>
@@ -95,7 +83,6 @@ function renderBusinesses(list) {
           ${b.reviews.map(r => `<p>⭐${r.stars} — ${r.text}</p>`).join("")}
         </div>
       </div>
-
     `;
 
     grid.appendChild(card);
@@ -104,8 +91,9 @@ function renderBusinesses(list) {
   attachStarEvents();
   attachSubmitEvents();
   attachBookmarkEvents();
-  attachToggleReviews(); 
+  attachToggleReviews();
 }
+
 
 // === Star Events ===
 function attachStarEvents() {
@@ -153,20 +141,22 @@ function attachBookmarkEvents() {
 
 
 // === Bookmark Events ===
+// Add this after your attachSubmitEvents(), attachToggleReviews(), etc.
 function attachBookmarkEvents() {
-  document.querySelectorAll(".bookmark-btn").forEach((btn, index) => {
+  document.querySelectorAll(".bookmark-btn").forEach(btn => {
     btn.onclick = () => {
-      const biz = businesses[index];
+      const name = btn.dataset.name;
+      const biz = businesses.find(b => b.name === name);
+
+      // Toggle favorite status
       biz.favorite = !biz.favorite;
 
-      // Change the button color
-      btn.style.color = biz.favorite ? "#FFD700" : "#ff9800";
+      // Set button color based on favorite status
+      btn.style.color = biz.favorite ? "#ff0000" : "#bebebe"; // red if favorited, gray if not
 
-      // Re-render businesses (apply filters if filtering by favorites)
-      const categorySelect = document.getElementById("categorySelect");
-      const selectedCategory = categorySelect.value;
+      // Optionally re-render filtered list
+      const selectedCategory = document.getElementById("categorySelect").value;
       let listToRender;
-
       if (selectedCategory === "favorites") {
         listToRender = businesses.filter(b => b.favorite);
       } else if (selectedCategory) {
@@ -179,6 +169,23 @@ function attachBookmarkEvents() {
     };
   });
 }
+
+// Add this to your category filter logic:
+document.getElementById("categorySelect").addEventListener("change", e => {
+  const category = e.target.value;
+  let filtered;
+
+  if (category === "favorites") {
+    filtered = businesses.filter(b => b.favorite);
+  } else if (category === "all") {
+    filtered = businesses;
+  } else {
+    filtered = businesses.filter(b => b.category === category);
+  }
+
+  renderBusinesses(filtered);
+});
+
 
 
 function attachToggleReviews() {
@@ -204,19 +211,6 @@ document.getElementById("sortSelect").addEventListener("change", e => {
   if (e.target.value === "rating") sorted.sort((a,b)=>b.rating - a.rating);
   renderBusinesses(sorted);
 });
-
-document.getElementById("categorySelect").addEventListener("change", e => {
-  let filtered;
-  if (e.target.value === "favorites") {
-    filtered = businesses.filter(b => b.favorite); // only bookmarked
-  } else if (e.target.value) {
-    filtered = businesses.filter(b => b.category === e.target.value); // normal category
-  } else {
-    filtered = businesses; // all
-  }
-  renderBusinesses(filtered);
-});
-
 
 
 // === Initial Render ===

@@ -106,14 +106,6 @@ button {
   transition: background 0.2s ease;
 }
 
-button.bookmark {
-  background: #007bff;
-  color: white;
-}
-
-button.bookmark:hover {
-  background: #0056b3;
-}
 
 button.review-btn {
   background: #ffa500;
@@ -156,3 +148,19 @@ footer {
 .star.selected {
   color: #FFD700;    /* yellow when selected */
 }
+
+.bookmark-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;   /* bigger than text */
+  color: #bebebe;      /* default orange */
+  float: right;
+  transition: color 0.3s, transform 0.2s;
+}
+
+.bookmark-btn:hover {
+  color: #ff0000;      /* gold on hover */
+  transform: scale(1.2); /* slight grow effect */
+}
+
