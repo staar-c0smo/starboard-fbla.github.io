@@ -10,11 +10,6 @@
     <header>
       <a href="#" class="logo">Starboard</a>
       <nav>
-
-        <ul>
-          <li><a href="homepage.html">Home</a></li>
-          <li><a href="business.html">Businesses</a></li>
-        </ul>
     </nav>
     </header>
 
@@ -39,12 +34,81 @@
         <div class="clipper">
         </div>
         <div class="anim-panel">
-          <a href="form.html"><button class="cta"> Get Started</button></a>
+          <div class="verify-section">
+            <div class="g-recaptcha" data-sitekey="6LftWQcsAAAAAMaCoBfZrLdc7ygbtarGPXIIPBRJ" data-callback="enableButton"></div>
+            <button class="cta" id="getStartedBtn" disabled onclick="proceed()"> Get Started</button>
+          </div>
         </div>
       </div>
     </section>
-    </div> 
+    </div>
+
+    <style>
+      .verify-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+      
+      .cta:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      
+      /* Center reCAPTCHA on mobile */
+      @media (max-width: 320px) {
+        .g-recaptcha {
+          transform: scale(0.9);
+          transform-origin: center;
+        }
+      }
+    </style>
+
+    <script>
+      // Enable button after reCAPTCHA verification
+      function enableButton(response) {
+        if (response) {
+          document.getElementById('getStartedBtn').disabled = false;
+        }
+      }
+
+      // Proceed to form page after verification
+      async function proceed() {
+        const token = grecaptcha.getResponse();
+        if (!token) {
+          alert('Please complete the reCAPTCHA verification');
+          return;
+        }
+
+        try {
+          // Get Firebase Functions instance
+          const verifyRecaptcha = firebase.functions().httpsCallable('verifyRecaptcha');
+          const result = await verifyRecaptcha({ token });
+          
+          if (result.data.success) {
+            window.location.href = 'form.html';
+          } else {
+            alert('reCAPTCHA verification failed. Please try again.');
+            grecaptcha.reset();
+            document.getElementById('getStartedBtn').disabled = true;
+          }
+        } catch (error) {
+          console.error('Verification error:', error);
+          alert('An error occurred. Please try again.');
+          grecaptcha.reset();
+          document.getElementById('getStartedBtn').disabled = true;
+        }
+      }
+    </script>
     
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js"></script>
+    <!-- Firebase Functions -->
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-functions.js"></script>
+    
+    <!-- Add reCAPTCHA script -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 
