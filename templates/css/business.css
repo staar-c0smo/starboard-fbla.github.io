@@ -131,3 +131,28 @@ footer {
   box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
   font-size: 0.9rem;
 }
+
+.review-form {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.review-form textarea {
+  resize: none;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+}
+
+.star {
+  cursor: pointer;   /* makes it clickable */
+  user-select: none; /* prevents text selection */
+  color: #ccc;       /* default gray */
+  transition: color 0.2s;
+}
+
+.star.selected {
+  color: #FFD700;    /* yellow when selected */
+}

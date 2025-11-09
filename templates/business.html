@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Local Businesses</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/business.css" />
   <style>
     /* TEMP extra styles in case your style.css isn't loading everything */
     body {
@@ -115,10 +116,10 @@
   <script>
     
     const businesses = [
-      { name: "Blueberry Café", category: "food", deal: "10% off pastries", rating: 4.7 },
-      { name: "TechWave Solutions", category: "tech", deal: "Free consultation", rating: 4.9 },
-      { name: "Trendy Threads", category: "retail", deal: "Buy 1 Get 1 Half Off", rating: 4.3 },
-      { name: "GreenLeaf Market", category: "food", deal: "5% off groceries", rating: 4.6 },
+      { name: "Blueberry Cafe", category: "food", deal: "10% off pastries", rating: 4.7, reviews: [] },
+      { name: "TechWave Solutions", category: "tech", deal: "Free consultation", rating: 4.9, reviews: [] },
+      { name: "Trendy Threads", category: "retail", deal: "Buy 1 Get 1 Half Off", rating: 4.3, reviews: [] },
+      { name: "GreenLeaf Market", category: "food", deal: "5% off groceries", rating: 4.6, reviews: [] },
     ];
 
     const grid = document.getElementById("businessGrid");
@@ -128,16 +129,38 @@
       list.forEach(b => {
         const card = document.createElement("div");
         card.className = "card";
+
+        const avgRating = b.reviews.length
+          ? (b.reviews.reduce((a, r) => a + r.stars, 0) / b.reviews.length).toFixed(1)
+          : b.rating.toFixed(1);
+
         card.innerHTML = `
           <button class="bookmark-btn" onclick="toggleBookmark('${b.name}')">★</button>
           <h3>${b.name}</h3>
           <p>Category: ${b.category}</p>
           <p class="deal">${b.deal}</p>
-          <p>⭐ ${b.rating}</p>
+          <p>⭐ ${avgRating}</p>
+          <div class="review-form">
+            <p>Leave a Review:</p>
+            <div class="stars">
+              ${[1,2,3,4,5].map(() => `<span class="star">★</span>`).join("")}
+            </div>
+            <textarea id="reviewText-${b.name}" rows="2" placeholder="Write your review..."></textarea>
+            <button class="submit-review" data-name="${b.name}">Submit</button>
+          </div>
+          <div id="reviews-${b.name}" class="reviews">
+            ${b.reviews.map(r => `<p>⭐${r.stars} — ${r.text}</p>`).join("")}
+          </div>
         `;
         grid.appendChild(card);
+
+        attachStarEvents(b.name);
       });
+
+      attachSubmitEvents(); // attach submit buttons after rendering all cards
     }
+
+
 
     function sortBusinesses(type) {
       let sorted = [...businesses];
@@ -157,6 +180,75 @@
     function toggleBookmark(name) {
       alert(`Bookmarked ${name}! (In final version this would save to local storage.)`);
     }
+
+    function openReviewForm(name) {
+      const reviewText = prompt(`Leave a review for ${name}:`);
+      if (reviewText === null) return;
+
+      const stars = parseInt(prompt("Rate out of 5 (1–5):"));
+      if (isNaN(stars) || stars < 1 || stars > 5) {
+        alert("Please enter a whole number between 1 and 5.");
+        return;
+      }
+
+      const biz = businesses.find(b => b.name === name);
+      biz.reviews.push({ text: reviewText, stars });
+
+      // Update average rating
+      const avg =
+        biz.reviews.reduce((a, r) => a + r.stars, 0) / biz.reviews.length;
+      biz.rating = parseFloat(avg.toFixed(1));
+
+      renderBusinesses(businesses);
+    }
+
+    function toggleReviews(name) {
+      const section = document.getElementById(`reviews-${name}`);
+      const btn = section.previousElementSibling; // the button right before it
+
+      if (section.style.display === "none") {
+        section.style.display = "block";
+        btn.textContent = "Hide Reviews";
+      } else {
+        section.style.display = "none";
+        btn.textContent = "Show Reviews";
+      }
+    }
+
+    const selectedStars = {};
+
+  function selectStar(name, value) {
+    selectedStars[name] = value;
+    const stars = document.querySelectorAll(`#stars-${name} .star`);
+    stars.forEach((s, i) => {
+      if (i < value) s.classList.add("selected");
+      else s.classList.remove("selected");
+    });
+  }
+
+  function submitReview(name) {
+    const textArea = document.getElementById(`reviewText-${name}`);
+    const text = textArea.value.trim();
+    const stars = selectedStars[name];
+
+    if (!text || !stars) {
+      alert("Please add both a review and a star rating.");
+      return;
+    }
+
+    const biz = businesses.find(b => b.name.replace(/\s+/g,'') === name);
+    biz.reviews.push({ text, stars });
+
+    // Update average rating
+    const avg = biz.reviews.reduce((a,r) => a+r.stars,0)/biz.reviews.length;
+    biz.rating = parseFloat(avg.toFixed(1));
+
+    textArea.value = "";
+    selectedStars[name] = null;
+
+    renderBusinesses(businesses);
+  }
+
 
     renderBusinesses(businesses);
   </script>
