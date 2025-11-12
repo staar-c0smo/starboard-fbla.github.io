@@ -1,152 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Starboard</title>
-    <link rel="stylesheet" type="text/css" href="css/homepage.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Starboard</title>
+  <link rel="stylesheet" type="text/css" href="css/homepage.css">
 </head>
 <body>
-    <header>
-      <a href="#" class="logo">Starboard</a>
-      <nav>
-    </nav>
-    </header>
+  <header>
+    <a href="#" class="logo">Starboard</a>
+    <nav></nav>
+  </header>
 
   <div class="wrapper">
     <section class="hero">
-      <div class = primary> </div>
+      <div class="primary"></div>
     </section>
-    <section class="sidebar">
-     <div class="inner">
-      <div class="clipper">
-        <section class="hero">
-          <h2>Support Local. Discover Hidden Gems.</h2>
-          <p>Find, review, and share your favorite small businesses in your community.</p>
-        </section>
 
-      <div class="anim-panel">
-      </div>
-     </div>
-    </section>
-    <section class="signup">
+    <section class="sidebar">
       <div class="inner">
         <div class="clipper">
-        </div>
-        <div class="anim-panel">
-          <div class="verify-section">
-            <div class="g-recaptcha" data-sitekey="6LftWQcsAAAAAMaCoBfZrLdc7ygbtarGPXIIPBRJ" data-callback="enableButton"></div>
-            <button class="cta" id="getStartedBtn" disabled onclick="proceed()"> Get Started</button>
-          </div>
+          <section class="hero">
+            <h2>Support Local. Discover Hidden Gems.</h2>
+            <p>Find, review, and share your favorite small businesses in your community.</p>
+          </section>
+          <div class="anim-panel"></div>
         </div>
       </div>
     </section>
-    </div>
 
-    <style>
-      .verify-section {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-      }
-      
-      .cta:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-      
-      /* Center reCAPTCHA on mobile */
-      @media (max-width: 320px) {
-        .g-recaptcha {
-          transform: scale(0.9);
-          transform-origin: center;
-        }
-      }
-    </style>
+    <section class="signup">
+      <div class="inner">
+        <div class="clipper"></div>
+        <div class="anim-panel">
+          <button class="cta" id="getStartedBtn" onclick="proceed()">Get Started</button>
+        </div>
+      </div>
+    </section>
+  </div>
 
-    <script>
-      // Enable button after reCAPTCHA verification
-      function enableButton(response) {
-        if (response) {
-          document.getElementById('getStartedBtn').disabled = false;
-        }
-      }
+  <script>
+    // Navigate to login page
+    function proceed() {
+      window.location.href = 'login.html'; // Change to your login page path
+    }
 
-      // Proceed to form page after verification
-      async function proceed() {
-        const token = grecaptcha.getResponse();
-        if (!token) {
-          alert('Please complete the reCAPTCHA verification');
-          return;
-        }
+    // GSAP animations
+    document.addEventListener("DOMContentLoaded", function() {
+      window.addEventListener("load", function() {
+        document.body.style.display = "block";
 
-        try {
-          // Get Firebase Functions instance
-          const verifyRecaptcha = firebase.functions().httpsCallable('verifyRecaptcha');
-          const result = await verifyRecaptcha({ token });
-          
-          if (result.data.success) {
-            window.location.href = 'form.html';
-          } else {
-            alert('reCAPTCHA verification failed. Please try again.');
-            grecaptcha.reset();
-            document.getElementById('getStartedBtn').disabled = true;
-          }
-        } catch (error) {
-          console.error('Verification error:', error);
-          alert('An error occurred. Please try again.');
-          grecaptcha.reset();
-          document.getElementById('getStartedBtn').disabled = true;
-        }
-      }
-    </script>
-    
-    <!-- Firebase App (the core Firebase SDK) -->
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js"></script>
-    <!-- Firebase Functions -->
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-functions.js"></script>
-    
-    <!-- Add reCAPTCHA script -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-
-    <script> 
-
-      document.addEventListener("DOMContentLoaded", function(event){
-          window.addEventListener("load", function(e) {
-            
-            document.body.style.display = "block";
-            
-            
-            var tl = new TimelineMax();
-
-            tl.staggerFrom('section', 2,{
-              opacity: 0,
-              scale: .5, 
-              ease: Power2.easeOut
-            }, 0.2)
-
-            tl.staggerFrom('h1, h2', .5, {
-              opacity: 0,
-              y: -40,
-              ease: Power2.easeInOut
-
-            }, 0.2, "-=2")
-
-            tl.staggerFrom('.anim-panel', 1, {
-              opacity: 0,
-              y: -40,
-              ease: Power2.easeInOut
-
-            }, 0.2, "-=1.5")
-
-          }, false);
-
+        var tl = gsap.timeline();
+        tl.staggerFrom('section', 2, { opacity: 0, scale: 0.5, ease: "power2.out" }, 0.2);
+        tl.staggerFrom('h1, h2', 0.5, { opacity: 0, y: -40, ease: "power2.inOut" }, 0.2, "-=2");
+        tl.staggerFrom('.anim-panel', 1, { opacity: 0, y: -40, ease: "power2.inOut" }, 0.2, "-=1.5");
       });
+    });
+  </script>
 
- 
-    </script>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
