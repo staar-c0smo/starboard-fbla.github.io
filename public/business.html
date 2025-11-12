@@ -1,0 +1,39 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local Businesses</title>
+  <link rel="stylesheet" href="css/business.css">
+</head>
+<body>
+
+<header>
+  <h1>Local Businesses</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="business.html">Businesses</a>
+  </nav>
+</header>
+
+<div class="filters">
+  <select id="sortSelect">
+    <option value="">Sort By</option>
+    <option value="name">Name (A–Z)</option>
+    <option value="rating">Rating (High–Low)</option>
+  </select>
+  <select id="categorySelect">
+    <option value="">All Categories</option>
+    <option value="food">Food</option>
+    <option value="retail">Retail</option>
+    <option value="tech">Tech</option>
+    <option value="favorites">Favorites</option>
+  </select>
+</div>
+
+<div class="business-grid" id="businessGrid"></div>
+
+<!-- Firebase + Business Script -->
+<script type="module" src="js/business.js"></script>
+</body>
+</html>
