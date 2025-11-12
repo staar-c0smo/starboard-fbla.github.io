@@ -1,13 +1,12 @@
-// Import the functions you need from the SDKs you need
+// Firebase Configuration and Initialization
+// This file sets up Firebase services for authentication and data management
+
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase project configuration
+// Contains API keys and service endpoints for Starboard project
 const firebaseConfig = {
   apiKey: "AIzaSyDDlpTxDMa83H32RwA_mE3E5zSMQClW_j0",
   authDomain: "starboardfbla.firebaseapp.com",
@@ -19,10 +18,14 @@ const firebaseConfig = {
   measurementId: "G-KTL8VM78QY"
 };
 
-// Initialize Firebase
+// Initialize Firebase application instance
 const app = initializeApp(firebaseConfig);
+
+// Initialize Analytics for tracking user interactions
 const analytics = getAnalytics(app);
+
+// Initialize Authentication for login/signup functionality
 const auth = getAuth(app);
 
+// Export auth instance for use in other files
 export { auth };
-
