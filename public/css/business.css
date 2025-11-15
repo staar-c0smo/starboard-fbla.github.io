@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 body { 
-  font-family: 'Inter', sans-serif; 
+  font-family: 'Poppins', sans-serif; 
   background: #f8fafc; 
   margin: 0; 
   padding: 0;
@@ -9,7 +9,7 @@ body {
 }
 
 header { 
-  background: linear-gradient(135deg, #0051c3 0%, #004aad 100%);
+  background: linear-gradient(135deg, #007ede9a 0%, #c300ff80 100%);
   color: white; 
   padding: 1.25rem 2.5rem;
   display: flex; 
@@ -148,7 +148,7 @@ textarea:focus {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  background: #0051c3;
+  background: linear-gradient(90deg, #007ede9a, #c300ff80);
   color: white;
   font-weight: 500;
   font-family: inherit;

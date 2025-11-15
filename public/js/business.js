@@ -42,7 +42,16 @@ let businesses = [
   { name: "Blueberry Cafe", category: "food", deal: "10% off pastries", rating: 4.7 },
   { name: "TechWave Solutions", category: "tech", deal: "Free consultation", rating: 4.9 },
   { name: "Trendy Threads", category: "retail", deal: "Buy 1 Get 1 Half Off", rating: 4.3 },
-  { name: "GreenLeaf Market", category: "food", deal: "5% off groceries", rating: 4.6 }
+  { name: "GreenLeaf Market", category: "food", deal: "5% off groceries", rating: 4.6 },
+  { name: "Sangria Cafe", category: "food", deal: "5% off lattes", rating: 3.3 },
+  { name: "Lemon Outfitters", category: "retail", deal: "No deals available", rating: 4.7 },
+  { name: "LevelUP Tech", category: "tech", deal: "15% off first consultation", rating: 3.9 },
+  { name: "Partita Market", category: "food", deal: "50% off for purchases made in November", rating: 4.2 },
+  { name: "Requiem Retailers", category: "retail", deal: "5% off lattes", rating: 4.6 },
+  { name: "Carmen Solutions", category: "tech", deal: "No deals available", rating: 4.8 },
+  { name: "AceThatStitch", category: "retail", deal: "15% off clearance", rating: 4.0 },
+  { name: "cobalt bistro", category: "food", deal: "No deals available", rating: 3.2 },
+  { name: "Edelweiß Eatery", category: "food", deal: "24% off salads", rating: 3.7 }
 ];
 
 // Authentication State Listener
