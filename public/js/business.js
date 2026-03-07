@@ -24,6 +24,9 @@ const auth = getAuth(app);
 // Get Firestore database instance for storing and retrieving business data
 const db = getFirestore(app);
 
+
+let map;
+let markers = [];
 // DOM Elements
 // Reference to the main grid container where business cards will be rendered
 const grid = document.getElementById("businessGrid");
@@ -39,19 +42,43 @@ let currentUser = null;
 const selectedStars = {};
 // Array of business objects with basic info (name, category, deal, default rating)
 let businesses = [
-  { name: "Blueberry Cafe", category: "food", deal: "10% off pastries", rating: 4.7 },
-  { name: "TechWave Solutions", category: "tech", deal: "Free consultation", rating: 4.9 },
-  { name: "Trendy Threads", category: "retail", deal: "Buy 1 Get 1 Half Off", rating: 4.3 },
-  { name: "GreenLeaf Market", category: "food", deal: "5% off groceries", rating: 4.6 },
-  { name: "Sunny Cafe", category: "food", deal: "5% off lattes", rating: 3.3 },
-  { name: "Lemon Outfitters", category: "retail", deal: "No deals available", rating: 4.7 },
-  { name: "LevelUP Tech", category: "tech", deal: "15% off first consultation", rating: 3.9 },
-  { name: "Partita Market", category: "food", deal: "50% off for Purchases Made in November", rating: 4.2 },
-  { name: "Remy's Retailers", category: "retail", deal: "Buy 1 Get 1 Free", rating: 4.6 },
-  { name: "Carmen Solutions", category: "tech", deal: "No deals available", rating: 4.8 },
-  { name: "AceThatStitch", category: "retail", deal: "15% off clearance", rating: 4.0 },
-  { name: "Cobalt Bistro", category: "food", deal: "No deals available", rating: 3.2 },
-  { name: "Edel Eatery", category: "food", deal: "24% off salads", rating: 3.7 }
+
+{
+name:"Blueberry Cafe",
+category:"food",
+deal:"10% off pastries",
+rating:4.7,
+lat:39.2680,
+lng:-76.7980
+},
+
+{
+name:"GreenLeaf Market",
+category:"food",
+deal:"5% off groceries",
+rating:4.6,
+lat:39.2702,
+lng:-76.8045
+},
+
+{
+name:"TechHub Repair",
+category:"tech",
+deal:"Free diagnostics",
+rating:4.5,
+lat:39.2651,
+lng:-76.7921
+},
+
+{
+name:"Trendy Threads",
+category:"retail",
+deal:"Buy 1 Get 1 Half Off",
+rating:4.3,
+lat:39.2665,
+lng:-76.8002
+}
+
 ];
 
 // Authentication State Listener
@@ -122,8 +149,11 @@ async function getCurrentlyDisplayedBusinesses() {
 // Render Businesses to DOM
 // Takes a list of businesses and creates visual cards for each one
 async function renderBusinesses(list) {
+
   // Clear the grid to remove any existing business cards
   grid.innerHTML = "";
+
+  updateMapMarkers(list);
 
   // Loop through each business in the provided list
   list.forEach(b => {
@@ -321,5 +351,42 @@ sortSelect.addEventListener("change", async () => {
   renderBusinesses(await getCurrentlyDisplayedBusinesses());
 });
 
+
+function initMap(){
+
+  map = L.map('map').setView([39.2673, -76.7983], 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+  }).addTo(map);
+
+}
+
+function updateMapMarkers(list){
+
+  if(!map) return;
+
+  markers.forEach(m => map.removeLayer(m));
+  markers = [];
+
+  list.forEach(b => {
+
+    if(!b.lat || !b.lng) return;
+
+    const marker = L.marker([b.lat, b.lng])
+      .addTo(map)
+      .bindPopup(`<b>${b.name}</b><br>${b.deal}`);
+
+    markers.push(marker);
+
+  });
+
+}
+
+async function refreshBusinesses(){
+  renderBusinesses(await getCurrentlyDisplayedBusinesses());
+}
 // -------------------- INITIAL RENDER --------------------
+initMap();
 renderBusinesses(await getCurrentlyDisplayedBusinesses());
