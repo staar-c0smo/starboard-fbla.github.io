@@ -49,7 +49,9 @@ category:"food",
 deal:"10% off pastries",
 rating:4.7,
 lat:39.2680,
-lng:-76.7980
+lng:-76.7980,
+images: ["assets/blueberry1.jpg", "assets/blueberry1.jpg"]
+
 },
 
 {
@@ -170,55 +172,71 @@ async function renderBusinesses(list) {
     // Add CSS class "card" for styling
     card.className = "card";
 
-    // Build the HTML for this business card
+
+
     card.innerHTML = `
-      <!-- Favorite/bookmark button in top-right; shows as star, gold if favorited -->
-      <button class="bookmark-btn" data-name="${b.name}" style="color:${b.favorite ? "#FFD700" : "#bebebe"};">★</button>
+  <button class="bookmark-btn" data-name="${b.name}" style="color:${b.favorite ? "#FFD700" : "#bebebe"};">★</button>
+  <h3>${b.name}</h3>
+  <p class="deal">${b.deal}</p>
+  <p>⭐ ${avgRating}</p>
 
-      <!-- Business name and basic information -->
-      <h3>${b.name}</h3>
-      <p class="deal">${b.deal}</p>
-      <p>⭐ ${avgRating}</p>
+  <div class="card-buttons" style="display:flex; gap:8px; margin-top:10px;">
+    <button class="show-map-btn" data-lat="${b.lat}" data-lng="${b.lng}">Show on Map</button>
+    <button class="view-details-btn" data-name="${b.name}">View Details</button>
+  </div>
 
-      <!-- Form for users to submit a new review -->
-      <div class="review-form">
-        <!-- 5-star rating selector (user clicks stars to select rating) -->
-        <div class="stars" id="stars-${safeName}">
-          ${[1,2,3,4,5].map(i => `<span class="star" data-value="${i}">★</span>`).join("")}
-        </div>
-        <!-- Text area for review content -->
-        <textarea id="reviewText-${safeName}" placeholder="Write your review..."></textarea>
-        <!-- Button to submit the review -->
-        <button class="submit-review-btn" data-name="${b.name}">Submit</button>
-      </div>
+  <div class="review-form">
+    <div class="stars" id="stars-${safeName}">
+      ${[1,2,3,4,5].map(i => `<span class="star" data-value="${i}">★</span>`).join("")}
+    </div>
+    <textarea id="reviewText-${safeName}" placeholder="Write your review..."></textarea>
+    <button class="submit-review-btn" data-name="${b.name}">Submit</button>
+  </div>
 
-      <!-- Section containing existing reviews for this business -->
-      <div class="reviews-section">
-        <!-- Expandable/collapsible button showing number of reviews -->
-        <button class="toggle-reviews-btn" data-name="${b.name}">Show Reviews (${b.reviews.length})</button>
+  <div class="reviews-section">
+    <button class="toggle-reviews-btn" data-name="${b.name}">Show Reviews (${b.reviews.length})</button>
+    <div class="reviews" id="reviews-${b.name}" style="display:none;">
+      ${b.reviews.map(r => `<p>⭐${r.stars} — <b>${r.userName}</b>: ${r.text}</p>`).join("")}
+    </div>
+  </div>
+`;
 
-        <!-- Container for all reviews; hidden by default, shown when button is clicked -->
-        <div class="reviews" id="reviews-${b.name}" style="display:none;">
-          ${b.reviews.map(r => `<p>⭐${r.stars} — <b>${r.userName}</b>: ${r.text}</p>`).join("")}
-        </div>
-      </div>
-    `;
-
-    // Add the finished card to the grid
     grid.appendChild(card);
   });
 
-  // Attach event listeners for all interactive elements
-  attachStarEvents();        // Star rating selection
-  attachSubmitEvents();      // Review submission
-  attachBookmarkEvents();    // Favorite button
-  attachToggleReviews();     // Show/hide reviews
+  attachStarEvents();
+  attachSubmitEvents();
+  attachBookmarkEvents();
+  attachToggleReviews();
+  attachCardButtons(); // <-- new
 }
 
-// Event Attachment Functions
-// These functions bind event listeners to interactive elements on the cards
+function attachCardButtons() {
+  // Show on Map
+  document.querySelectorAll(".show-map-btn").forEach(btn => {
+    btn.onclick = () => {
+      const lat = parseFloat(btn.dataset.lat);
+      const lng = parseFloat(btn.dataset.lng);
+      if (!isNaN(lat) && !isNaN(lng)) {
+        map.setView([lat, lng], 16);
+        const marker = markers.find(m => {
+          const latLng = m.getLatLng();
+          return latLng.lat === lat && latLng.lng === lng;
+        });
+        if (marker) marker.openPopup();
+      }
+    };
+  });
 
-// Attach star rating selection handlers
+  // View Details (open modal)
+  document.querySelectorAll(".view-details-btn").forEach(btn => {
+    btn.onclick = async () => {
+      const name = btn.dataset.name;
+      const business = businesses.find(b => b.name === name);
+      if (business) openBusinessDetail(business);
+    };
+  });
+}
 
 // Attach star rating selection handlers
 function attachStarEvents() {
@@ -384,9 +402,36 @@ function updateMapMarkers(list){
 
 }
 
-async function refreshBusinesses(){
-  renderBusinesses(await getCurrentlyDisplayedBusinesses());
+// Business Detail Panel
+function openBusinessDetail(b) {
+  const detail = document.getElementById("businessDetail");
+  detail.innerHTML = `
+    <button class="close-btn">✕</button>
+    <h2>${b.name}</h2>
+    <p><b>Deal:</b> ${b.deal}</p>
+    <p>⭐ ${b.rating.toFixed(1)}</p>
+    <div class="detail-images">
+      ${(b.images || ["images/sample1.jpg","images/sample2.jpg"]).map(src => `<img src="${src}">`).join("")}
+    </div>
+    <h3>Reviews</h3>
+    ${b.reviews.map(r => `<p>⭐${r.stars} <b>${r.userName}</b>: ${r.text}</p>`).join("")}
+  `;
+  detail.classList.remove("hidden");
+
+  // Bind close button after creating it
+  detail.querySelector(".close-btn").onclick = closeBusinessDetail;
+
+  if (b.lat && b.lng) map.setView([b.lat, b.lng], 16);
+
+  addModalOverlay();
 }
-// -------------------- INITIAL RENDER --------------------
+
+function closeBusinessDetail() {
+  const detail = document.getElementById("businessDetail");
+  detail.classList.add("hidden");
+  removeModalOverlay();
+}
+
+// Initial Render
 initMap();
 renderBusinesses(await getCurrentlyDisplayedBusinesses());
