@@ -359,3 +359,24 @@ textarea:focus {
   border-radius:8px;
   margin-bottom:10px;
 }
+
+.address {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0.25rem 0 0.5rem;
+}
+
+.business-detail p b {
+  font-weight: 600;
+}
+
+.business-detail p {
+  margin: 0.25rem 0;
+  color: #334155;
+}
+
+.blurb {
+  font-size: 0.95rem;
+  color: #475569;
+  margin: 0.25rem 0 0.5rem;
+}
