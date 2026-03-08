@@ -24,6 +24,9 @@ const auth = getAuth(app);
 // Get Firestore database instance for storing and retrieving business data
 const db = getFirestore(app);
 
+
+let map;
+let markers = [];
 // DOM Elements
 // Reference to the main grid container where business cards will be rendered
 const grid = document.getElementById("businessGrid");
@@ -39,19 +42,127 @@ let currentUser = null;
 const selectedStars = {};
 // Array of business objects with basic info (name, category, deal, default rating)
 let businesses = [
-  { name: "Blueberry Cafe", category: "food", deal: "10% off pastries", rating: 4.7 },
-  { name: "TechWave Solutions", category: "tech", deal: "Free consultation", rating: 4.9 },
-  { name: "Trendy Threads", category: "retail", deal: "Buy 1 Get 1 Half Off", rating: 4.3 },
-  { name: "GreenLeaf Market", category: "food", deal: "5% off groceries", rating: 4.6 },
-  { name: "Sunny Cafe", category: "food", deal: "5% off lattes", rating: 3.3 },
-  { name: "Lemon Outfitters", category: "retail", deal: "No deals available", rating: 4.7 },
-  { name: "LevelUP Tech", category: "tech", deal: "15% off first consultation", rating: 3.9 },
-  { name: "Partita Market", category: "food", deal: "50% off for Purchases Made in November", rating: 4.2 },
-  { name: "Remy's Retailers", category: "retail", deal: "Buy 1 Get 1 Free", rating: 4.6 },
-  { name: "Carmen Solutions", category: "tech", deal: "No deals available", rating: 4.8 },
-  { name: "AceThatStitch", category: "retail", deal: "15% off clearance", rating: 4.0 },
-  { name: "Cobalt Bistro", category: "food", deal: "No deals available", rating: 3.2 },
-  { name: "Edel Eatery", category: "food", deal: "24% off salads", rating: 3.7 }
+
+  {
+    name: "Chosun Hwaro Korean BBQ",
+    category: "restaurant",
+    blurb: "Experience authentic Korean BBQ with table grills and a wide selection of marinades.",
+    address: "9445 Baltimore National Pike, Ellicott City, MD 21042",
+    deal: "20% off on all combo meals every Tuesday!",
+    rating: 4.2,
+    lat: 39.27737387179253,
+    lng: -76.83719668008143,
+    images: ["assets/blueberry1.jpg","assets/blueberry1.jpg"]
+  },
+
+  {
+    name: "Cafe June",
+    category: "food",
+    blurb: "A cozy cafe serving freshly brewed coffee, pastries, and breakfast favorites.",
+    address: "10039 Baltimore National Pike, Ellicott City, MD 21042",
+    deal: "Buy one latte, get a croissant free on weekdays.",
+    rating: 4.5,
+    lat: 39.27860429569345,
+    lng: -76.85767198145213,
+    images: ["images/cafejune1.jpg","images/cafejune2.jpg"]
+  },
+
+  {
+    name: "Forget‑Me‑Not Factory",
+    category: "retail",
+    blurb: "Handmade gifts, home décor, and unique souvenirs to cherish forever.",
+    address: "8044 Main St, Ellicott City, MD 21043",
+    deal: "Free gift wrapping with purchases over $50.",
+    rating: 4.5,
+    lat: 39.2678175,
+    lng: -76.79546289999999,
+    images: ["images/forgetmenot1.jpg","images/forgetmenot2.jpg"]
+  },
+
+  {
+    name: "Simply the Best Boutique",
+    category: "retail",
+    blurb: "Chic and trendy clothing boutique for women and men with unique styles.",
+    address: "8104 Main St, Ellicott City, MD 21043",
+    deal: "15% off your first purchase in-store.",
+    rating: 5.0,
+    lat: 39.2674953,
+    lng: -76.7965747,
+    images: ["images/simplybest1.jpg","images/simplybest2.jpg"]
+  },
+
+  {
+    name: "Tous Les Jours",
+    category: "food",
+    blurb: "French-Asian bakery offering fresh breads, cakes, and desserts daily.",
+    address: "9380 Baltimore National Pike, Ste 111, Ellicott City, MD 21042",
+    deal: "Free mini croissant with orders over $10 on weekends.",
+    rating: 4.3,
+    lat: 39.27829029999999,
+    lng: -76.8347883,
+    images: ["images/touslesjours1.jpg","images/touslesjours2.jpg"]
+  },
+
+  {
+    name: "Sweet Elizabeth Jane",
+    category: "retail",
+    blurb: "Stylish clothing and accessories for every occasion, curated locally.",
+    address: "8289 Main St, Ellicott City, MD 21043",
+    deal: "Buy 2 accessories, get 1 free this month.",
+    rating: 4.7,
+    lat: 39.267621399999996,
+    lng: -76.79944569999999,
+    images: ["images/sweetelizabeth1.jpg","images/sweetelizabeth2.jpg"]
+  },
+
+  {
+    name: "Park Ridge Trading Company",
+    category: "retail",
+    blurb: "Gourmet groceries and specialty foods from around the world.",
+    address: "8080 Main St, Ellicott City, MD 21043",
+    deal: "10% off all imported cheeses on Saturdays.",
+    rating: 4.9,
+    lat: 39.2676197,
+    lng: -76.7961931,
+    images: ["images/parkridge1.jpg","images/parkridge2.jpg"]
+  },
+
+  {
+    name: "Old Mill Cafe",
+    category: "food",
+    blurb: "Classic American breakfast and brunch spot with hearty sandwiches.",
+    address: "4 Frederick Rd, Ellicott City, MD 21043",
+    deal: "Free coffee refill with any breakfast platter.",
+    rating: 4.4,
+    lat: 39.2678,
+    lng: -76.79318,
+    images: ["images/oldmillcafe1.jpg","images/oldmillcafe2.jpg"]
+  },
+
+  {
+    name: "E.C. Pops",
+    category: "retail",
+    blurb: "Gourmet popcorn, snacks, and sweet treats in a fun family-friendly shop.",
+    address: "3709 Old Columbia Pike, Ellicott City, MD 21043",
+    deal: "Buy 3 pops, get 1 free every Thursday.",
+    rating: 4.7,
+    lat: 39.2671893,
+    lng: -76.7979802,
+    images: ["images/ecpops1.jpg","images/ecpops2.jpg"]
+  },
+
+  {
+    name: "bb.q Chicken Ellicott City",
+    category: "food",
+    blurb: "Korean-style fried chicken with a variety of sauces and sides.",
+    address: "8801 Baltimore National Pike, Ste K, Ellicott City, MD 21043",
+    deal: "20% off family combo on Mondays.",
+    rating: 4.1,
+    lat: 39.27654577165137,
+    lng: -76.81739337393324,
+    images: ["images/bbqchicken1.jpg","images/bbqchicken2.jpg"]
+  }
+
 ];
 
 // Authentication State Listener
@@ -122,8 +233,11 @@ async function getCurrentlyDisplayedBusinesses() {
 // Render Businesses to DOM
 // Takes a list of businesses and creates visual cards for each one
 async function renderBusinesses(list) {
+
   // Clear the grid to remove any existing business cards
   grid.innerHTML = "";
+
+  updateMapMarkers(list);
 
   // Loop through each business in the provided list
   list.forEach(b => {
@@ -140,55 +254,75 @@ async function renderBusinesses(list) {
     // Add CSS class "card" for styling
     card.className = "card";
 
-    // Build the HTML for this business card
+
+
     card.innerHTML = `
-      <!-- Favorite/bookmark button in top-right; shows as star, gold if favorited -->
-      <button class="bookmark-btn" data-name="${b.name}" style="color:${b.favorite ? "#FFD700" : "#bebebe"};">★</button>
+  <button class="bookmark-btn" data-name="${b.name}" style="color:${b.favorite ? "#FFD700" : "#bebebe"};">★</button>
+  <h3>${b.name}</h3>
+  <p class="blurb">${b.blurb || ""}</p>  <!-- added blurb -->
 
-      <!-- Business name and basic information -->
-      <h3>${b.name}</h3>
-      <p class="deal">${b.deal}</p>
-      <p>⭐ ${avgRating}</p>
+  <p class="deal">${b.deal}</p>
+  <p class="address">${b.address}</p> 
+  
+  <p>⭐ ${avgRating}</p>
 
-      <!-- Form for users to submit a new review -->
-      <div class="review-form">
-        <!-- 5-star rating selector (user clicks stars to select rating) -->
-        <div class="stars" id="stars-${safeName}">
-          ${[1,2,3,4,5].map(i => `<span class="star" data-value="${i}">★</span>`).join("")}
-        </div>
-        <!-- Text area for review content -->
-        <textarea id="reviewText-${safeName}" placeholder="Write your review..."></textarea>
-        <!-- Button to submit the review -->
-        <button class="submit-review-btn" data-name="${b.name}">Submit</button>
-      </div>
+  <div class="card-buttons" style="display:flex; gap:8px; margin-top:10px;">
+    <button class="show-map-btn" data-lat="${b.lat}" data-lng="${b.lng}">Show on Map</button>
+    <button class="view-details-btn" data-name="${b.name}">View Details</button>
+  </div>
 
-      <!-- Section containing existing reviews for this business -->
-      <div class="reviews-section">
-        <!-- Expandable/collapsible button showing number of reviews -->
-        <button class="toggle-reviews-btn" data-name="${b.name}">Show Reviews (${b.reviews.length})</button>
+  <div class="review-form">
+    <div class="stars" id="stars-${safeName}">
+      ${[1,2,3,4,5].map(i => `<span class="star" data-value="${i}">★</span>`).join("")}
+    </div>
+    <textarea id="reviewText-${safeName}" placeholder="Write your review..."></textarea>
+    <button class="submit-review-btn" data-name="${b.name}">Submit</button>
+  </div>
 
-        <!-- Container for all reviews; hidden by default, shown when button is clicked -->
-        <div class="reviews" id="reviews-${b.name}" style="display:none;">
-          ${b.reviews.map(r => `<p>⭐${r.stars} — <b>${r.userName}</b>: ${r.text}</p>`).join("")}
-        </div>
-      </div>
-    `;
+  <div class="reviews-section">
+    <button class="toggle-reviews-btn" data-name="${b.name}">Show Reviews (${b.reviews.length})</button>
+    <div class="reviews" id="reviews-${b.name}" style="display:none;">
+      ${b.reviews.map(r => `<p>⭐${r.stars} — <b>${r.userName}</b>: ${r.text}</p>`).join("")}
+    </div>
+  </div>
+`;
 
-    // Add the finished card to the grid
     grid.appendChild(card);
   });
 
-  // Attach event listeners for all interactive elements
-  attachStarEvents();        // Star rating selection
-  attachSubmitEvents();      // Review submission
-  attachBookmarkEvents();    // Favorite button
-  attachToggleReviews();     // Show/hide reviews
+  attachStarEvents();
+  attachSubmitEvents();
+  attachBookmarkEvents();
+  attachToggleReviews();
+  attachCardButtons(); // <-- new
 }
 
-// Event Attachment Functions
-// These functions bind event listeners to interactive elements on the cards
+function attachCardButtons() {
+  // Show on Map
+  document.querySelectorAll(".show-map-btn").forEach(btn => {
+    btn.onclick = () => {
+      const lat = parseFloat(btn.dataset.lat);
+      const lng = parseFloat(btn.dataset.lng);
+      if (!isNaN(lat) && !isNaN(lng)) {
+        map.setView([lat, lng], 16);
+        const marker = markers.find(m => {
+          const latLng = m.getLatLng();
+          return latLng.lat === lat && latLng.lng === lng;
+        });
+        if (marker) marker.openPopup();
+      }
+    };
+  });
 
-// Attach star rating selection handlers
+  // View Details (open modal)
+  document.querySelectorAll(".view-details-btn").forEach(btn => {
+    btn.onclick = async () => {
+      const name = btn.dataset.name;
+      const business = businesses.find(b => b.name === name);
+      if (business) openBusinessDetail(business);
+    };
+  });
+}
 
 // Attach star rating selection handlers
 function attachStarEvents() {
@@ -321,5 +455,73 @@ sortSelect.addEventListener("change", async () => {
   renderBusinesses(await getCurrentlyDisplayedBusinesses());
 });
 
-// -------------------- INITIAL RENDER --------------------
+
+function initMap(){
+
+  map = L.map('map').setView([39.2673, -76.7983], 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+  }).addTo(map);
+
+}
+
+function updateMapMarkers(list){
+
+  if(!map) return;
+
+  markers.forEach(m => map.removeLayer(m));
+  markers = [];
+
+  list.forEach(b => {
+
+    if(!b.lat || !b.lng) return;
+
+    const marker = L.marker([b.lat, b.lng])
+      .addTo(map)
+      .bindPopup(`<b>${b.name}</b><br>${b.deal}`);
+
+    markers.push(marker);
+
+  });
+
+}
+
+// Business Detail Panel
+function openBusinessDetail(b) {
+  const detail = document.getElementById("businessDetail");
+  detail.innerHTML = `
+    <button class="close-btn">✕</button>
+    <h2>${b.name}</h2>
+    <p><b>Address:</b> ${b.address}</p>
+    <p class="blurb">${b.blurb || ""}</p>  <!-- added blurb -->
+
+
+    <p><b>Deal:</b> ${b.deal}</p>
+    <p>⭐ ${b.rating.toFixed(1)}</p>
+    <div class="detail-images">
+      ${(b.images || ["images/sample1.jpg","images/sample2.jpg"]).map(src => `<img src="${src}">`).join("")}
+    </div>
+    <h3>Reviews</h3>
+    ${b.reviews.map(r => `<p>⭐${r.stars} <b>${r.userName}</b>: ${r.text}</p>`).join("")}
+  `;
+  detail.classList.remove("hidden");
+
+  // Bind close button after creating it
+  detail.querySelector(".close-btn").onclick = closeBusinessDetail;
+
+  if (b.lat && b.lng) map.setView([b.lat, b.lng], 16);
+
+  addModalOverlay();
+}
+
+function closeBusinessDetail() {
+  const detail = document.getElementById("businessDetail");
+  detail.classList.add("hidden");
+  removeModalOverlay();
+}
+
+// Initial Render
+initMap();
 renderBusinesses(await getCurrentlyDisplayedBusinesses());

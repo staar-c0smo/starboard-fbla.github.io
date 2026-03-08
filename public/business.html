@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Local Businesses</title>
   <link rel="stylesheet" href="css/business.css">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 </head>
 <body>
 
@@ -33,9 +35,22 @@
   </select>
 </div>
 
-<div class="business-grid" id="businessGrid"></div>
+<div class="business-layout">
+
+  <div class="business-list">
+    <div class="business-grid" id="businessGrid"></div>
+  </div>
+
+  <div class="map-container">
+    <div id="map"></div>
+  </div>
+
+</div>
+
+<div id="businessDetail" class="business-detail hidden"></div>
 
 <!-- Firebase + Business Script -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script type="module" src="js/business.js"></script>
 </body>
 </html>
