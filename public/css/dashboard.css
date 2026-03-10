@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
 *, *::before, *::after {
@@ -12,6 +11,8 @@
   --purple: #c300ff;
   --blue-t: #007ede9a;
   --purple-t: #c300ff80;
+  --blue-soft: rgba(0, 126, 222, 0.08);
+  --purple-soft: rgba(195, 0, 255, 0.07);
   --bg: #f4f2ff;
   --surface: #ffffff;
   --surface-2: #f8f7ff;
@@ -22,7 +23,6 @@
   --radius: 10px;
 }
 
-/* ── Body ── */
 body {
   background-color: var(--bg);
   background-image:
@@ -31,12 +31,14 @@ body {
     radial-gradient(ellipse 40% 35% at 50% 50%, rgba(195, 0, 255, 0.04) 0%, transparent 70%);
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   font-family: 'Outfit', sans-serif;
+  padding: 40px 20px;
   overflow-x: hidden;
-  color: var(--text);
 }
 
+/* Soft floating orbs */
 body::before,
 body::after {
   content: '';
@@ -72,78 +74,24 @@ body::after {
   66%       { transform: translate(-18px, 12px) scale(0.97); }
 }
 
-/* ── Header ── */
-header {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 40px;
-  height: 64px;
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.04);
-}
-
-.logo {
-  font-family: 'Space Mono', monospace;
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  text-decoration: none;
-  background: linear-gradient(135deg, var(--blue), var(--purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-nav ul li a {
-  text-decoration: none;
-  color: var(--text-muted);
-  font-size: 14px;
-  font-weight: 500;
-  padding: 6px 14px;
-  border-radius: 8px;
-  transition: all 200ms ease;
-}
-
-nav ul li a:hover {
-  color: var(--text);
-  background: rgba(0, 126, 222, 0.06);
-}
-
-/* ── Wrapper ── */
 .wrapper {
   position: relative;
   z-index: 1;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 48px 20px;
+  width: 100%;
+  max-width: 500px;
   animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* ── Section / Card ── */
-section {
+#addBusinessForm {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 20px;
   padding: 44px 40px;
   position: relative;
   overflow: hidden;
-  width: 100%;
-  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   box-shadow:
     0 1px 2px rgba(0, 0, 0, 0.04),
     0 8px 32px rgba(0, 126, 222, 0.08),
@@ -151,8 +99,8 @@ section {
     0 0 0 1px rgba(255, 255, 255, 0.9) inset;
 }
 
-/* Top gradient bar */
-section::before {
+/* Top gradient shimmer */
+#addBusinessForm::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
@@ -166,8 +114,8 @@ section::before {
   border-radius: 20px 20px 0 0;
 }
 
-/* Corner blush */
-section::after {
+/* Decorative corner blush */
+#addBusinessForm::after {
   content: '';
   position: absolute;
   top: -40px; right: -40px;
@@ -176,8 +124,7 @@ section::after {
   pointer-events: none;
 }
 
-/* ── Typography ── */
-section > h1 {
+.form-title {
   font-size: 23px;
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -185,32 +132,28 @@ section > h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
 }
 
-section > p {
+.form-subtitle {
   font-size: 13px;
   font-weight: 400;
   color: var(--text-muted);
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
-section > p:first-of-type {
-  padding-bottom: 20px;
-  border-bottom: 1px solid;
-  border-image: linear-gradient(90deg, rgba(0,126,222,0.2), rgba(195,0,255,0.2), transparent) 1;
-  margin-bottom: 20px;
+/* Divider after subtitle */
+.form-subtitle::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0,126,222,0.2), rgba(195,0,255,0.2), transparent);
+  margin-top: 16px;
 }
 
-/* ── Form ── */
-#loginForm {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-input[type="email"],
-input[type="password"] {
+input[type="text"],
+input[type="number"],
+textarea {
   width: 100%;
   background: var(--surface-2);
   border: 1px solid var(--border);
@@ -219,27 +162,29 @@ input[type="password"] {
   font-family: 'Outfit', sans-serif;
   font-size: 14px;
   font-weight: 400;
-  padding: 13px 16px !important;
-  margin-bottom: 12px !important;
+  padding: 13px 16px;
   outline: none;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
   -webkit-appearance: none;
 }
 
-input[type="email"]::placeholder,
-input[type="password"]::placeholder {
+input[type="text"]::placeholder,
+input[type="number"]::placeholder,
+textarea::placeholder {
   color: var(--text-muted);
   font-weight: 300;
 }
 
-input[type="email"]:hover,
-input[type="password"]:hover {
+input[type="text"]:hover,
+input[type="number"]:hover,
+textarea:hover {
   border-color: rgba(0, 126, 222, 0.25);
   background: #fff;
 }
 
-input[type="email"]:focus,
-input[type="password"]:focus {
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus {
   border-color: var(--border-focus);
   background: #fff;
   box-shadow:
@@ -247,13 +192,56 @@ input[type="password"]:focus {
     0 2px 8px rgba(0, 126, 222, 0.08);
 }
 
-/* reCAPTCHA wrapper */
-.g-recaptcha {
-  margin: 4px 0 14px;
-  transform-origin: left top;
+textarea {
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.6;
 }
 
-/* ── Submit Button ── */
+.coord-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+input[type="file"] {
+  width: 100%;
+  background: rgba(195, 0, 255, 0.03);
+  border: 1.5px dashed rgba(195, 0, 255, 0.25);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  padding: 13px 16px;
+  cursor: pointer;
+  transition: all 250ms ease;
+}
+
+input[type="file"]:hover {
+  border-color: rgba(195, 0, 255, 0.5);
+  background: rgba(195, 0, 255, 0.05);
+  color: var(--text);
+}
+
+input[type="file"]::file-selector-button {
+  background: linear-gradient(135deg, rgba(0,126,222,0.1), rgba(195,0,255,0.1));
+  border: 1px solid rgba(195, 0, 255, 0.3);
+  border-radius: 6px;
+  color: var(--purple);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 6px 14px;
+  margin-right: 14px;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: linear-gradient(135deg, rgba(0,126,222,0.18), rgba(195,0,255,0.18));
+}
+
 button[type="submit"] {
   width: 100%;
   position: relative;
@@ -265,9 +253,9 @@ button[type="submit"] {
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  padding: 15px !important;
-  margin-top: 4px !important;
+  padding: 15px;
   cursor: pointer;
+  margin-top: 6px;
   overflow: hidden;
   transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow:
@@ -301,16 +289,9 @@ button[type="submit"]:active {
     0 1px 4px rgba(195, 0, 255, 0.15);
 }
 
-/* ── Login message ── */
-#loginMessage {
-  margin-top: 16px;
-  font-size: 13px;
-  text-align: center;
-  color: var(--text-muted);
-  min-height: 20px;
-}
+button[type="submit"] > * { position: relative; z-index: 1; }
 
-/* ── Staggered entrance ── */
+/* Staggered entrance */
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -321,23 +302,35 @@ button[type="submit"]:active {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-section > * {
+#addBusinessForm > * {
   animation: fadeIn 0.4s ease forwards;
   opacity: 0;
 }
 
-section > *:nth-child(1) { animation-delay: 0.05s; }
-section > *:nth-child(2) { animation-delay: 0.12s; }
-section > *:nth-child(3) { animation-delay: 0.20s; }
-section > *:nth-child(4) { animation-delay: 0.28s; }
+#addBusinessForm > *:nth-child(1)  { animation-delay: 0.05s; }
+#addBusinessForm > *:nth-child(2)  { animation-delay: 0.10s; }
+#addBusinessForm > *:nth-child(3)  { animation-delay: 0.15s; }
+#addBusinessForm > *:nth-child(4)  { animation-delay: 0.20s; }
+#addBusinessForm > *:nth-child(5)  { animation-delay: 0.25s; }
+#addBusinessForm > *:nth-child(6)  { animation-delay: 0.30s; }
+#addBusinessForm > *:nth-child(7)  { animation-delay: 0.35s; }
+#addBusinessForm > *:nth-child(8)  { animation-delay: 0.40s; }
+#addBusinessForm > *:nth-child(9)  { animation-delay: 0.45s; }
+#addBusinessForm > *:nth-child(10) { animation-delay: 0.50s; }
 
-/* ── Scrollbar ── */
+/* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(var(--blue-t), var(--purple-t));
   border-radius: 3px;
 }
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 0.4;
+}
+
 header {
   position: absolute;
   padding: 2em;

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Starboard</title>
+  <link rel="stylesheet" href="css/login.css" />
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">Starboard</a>
+    <nav>
+      <ul>
+        <li><a href="help.html">FAQ</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="business.html">Businesses</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="wrapper" >
+    <section>
+      <h1>Admin Login</h1>
+      <p>Sign in to add businesses</p>
+      <form id="loginForm">
+        <input type="email" id="email" placeholder="Email" required style="width: 100%; padding: 0.8em; margin-bottom: 1em;">
+        <input type="password" id="password" placeholder="Password" required style="width: 100%; padding: 0.8em; margin-bottom: 1em;">
+        <div class="g-recaptcha" data-sitekey="6LfYvgksAAAAAIhbGjMHykTr98TNnLmPdrJ9tY9k"></div>
+        <button type="submit" style="margin-top: 1em; padding: 0.8em 2em;">Login or Signup</button>
+      </form>
+      <p id="loginMessage"></p>
+    </section>
+  </div>
+
+  <!-- Use type="module" for modern Firebase SDK -->
+  <script type="module" src="js/adminlogin.js"></script>
+</body>
+</html>
