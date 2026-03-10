@@ -19,7 +19,7 @@
     </nav>
   </header>
 
-  <div class="wrapper">
+  <div class="wrapper" >
     <section>
       <h1>Login & Signup</h1>
       <p>Sign in or sign up to access business listings and reviews</p>
@@ -30,6 +30,8 @@
         <button type="submit" style="margin-top: 1em; padding: 0.8em 2em;">Login or Signup</button>
       </form>
 
+      
+
       <button id="adminRedirectBtn" type="button" class="admin-btn">
         Go to Admin Login
       </button>
@@ -37,8 +39,7 @@
     </section>
   </div>
 
-  <!-- Firebase login JS -->
-  <script type="module" src="js/firebase-login.js"></script>
+    <script type="module" src="js/firebase-login.js"></script>
   <script>
     // Redirect admin button to adminlogin.html
     const adminBtn = document.getElementById('adminRedirectBtn');
@@ -46,5 +47,10 @@
       window.location.href = 'adminlogin.html';
     });
   </script>
+</body>
+</html>
+
+  <!-- Use type="module" for modern Firebase SDK -->
+  <script type="module" src="js/firebase-login.js"></script>
 </body>
 </html>
