@@ -61,3 +61,10 @@ if (!loginForm) {
 }
 
 console.log("loginForm element:", document.getElementById("loginForm"));
+const adminBtn = document.getElementById("adminRedirectBtn");
+
+if (adminBtn) {
+  adminBtn.addEventListener("click", () => {
+    window.location.href = "adminlogin.html";
+  });
+}
