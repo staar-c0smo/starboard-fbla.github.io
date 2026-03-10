@@ -75,7 +75,7 @@ select:hover {
 
 .card { 
   background: white; 
-  padding: 1.5rem;
+
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.06);
   transition: transform 0.2s, box-shadow 0.2s;
@@ -160,24 +160,16 @@ textarea:focus {
   transform: translateY(-1px);
 }
 
-.bookmark-btn { 
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.4rem;
-  color: #cbd5e1;
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  transition: all 0.2s;
-  padding: 0.5rem;
+
+.bookmark-btn{
+  margin-top:8px;
+  cursor:pointer;
+  background:none;
+  border:none;
+  font-size:1.4rem;  
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
 }
+
 
 .bookmark-btn:hover { 
   color: #ff0000;
@@ -379,4 +371,61 @@ textarea:focus {
   font-size: 0.95rem;
   color: #475569;
   margin: 0.25rem 0 0.5rem;
+}
+
+
+.card-img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  display:block;
+  border-radius: 12px 12px 0 0;
+}
+
+.card-body{
+  padding: 1.5rem;
+}
+.card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.card-carousel{
+  position:relative;
+}
+
+
+.prev-btn,
+.next-btn{
+  position:absolute;
+  top:10%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,0.5);
+  color:white;
+  border:none;
+  padding:6px 10px;
+  cursor:pointer;
+  font-size:18px;
+  border-radius:5px;
+}
+
+.prev-btn{ left:8px; }
+.next-btn{ right:8px; }
+
+.card-buttons button{
+   margin-top: 0.75rem;
+  padding: 0.625rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background:  #c300ff80;
+  color: white;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+.card-buttons button:hover{
+  background:  #007ede9a;
+
 }

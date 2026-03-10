@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <title>Document</title>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">Starboard</a>
+    <nav>
+      <ul>
+        <li><a href="help.html">FAQ</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="business.html">Businesses</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <div class="wrapper">
+  <form id="addBusinessForm">
+    <h2>Add Businesses</h2>
+  <input type="text" id="businessName" placeholder="Business Name" required>
+  <input type="text" id="businessCategory" placeholder="Category (food, retail, etc.)" required>
+  <textarea id="businessBlurb" placeholder="Short Description"></textarea>
+  <input type="text" id="businessAddress" placeholder="Address">
+  <input type="text" id="businessDeal" placeholder="Deal/Promotion">
+  <input type="number" step="0.1" id="businessRating" placeholder="Default Rating">
+  <input type="number" step="any" id="businessLat" placeholder="Latitude">
+  <input type="number" step="any" id="businessLng" placeholder="Longitude">
+  <input type="file" id="businessImages" multiple accept="image/*">
+  <button type="submit">Add Business</button>
+  </div>
+
+</form>
+<script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

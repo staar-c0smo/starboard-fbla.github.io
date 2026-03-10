@@ -43,128 +43,134 @@ const selectedStars = {};
 // Array of business objects with basic info (name, category, deal, default rating)
 let businesses = [
 
-  {
-    name: "Chosun Hwaro Korean BBQ",
-    category: "restaurant",
-    blurb: "Experience authentic Korean BBQ with table grills and a wide selection of marinades.",
-    address: "9445 Baltimore National Pike, Ellicott City, MD 21042",
-    deal: "20% off on all combo meals every Tuesday!",
-    rating: 4.2,
-    lat: 39.27737387179253,
-    lng: -76.83719668008143,
-    images: ["assets/blueberry1.jpg","assets/blueberry1.jpg"]
-  },
+  // {
+  //   name: "Chosun Hwaro Korean BBQ",
+  //   category: "restaurant",
+  //   blurb: "Experience authentic Korean BBQ with table grills and a wide selection of marinades.",
+  //   address: "9445 Baltimore National Pike, Ellicott City, MD 21042",
+  //   deal: "20% off on all combo meals every Tuesday!",
+  //   rating: 4.2,
+  //   lat: 39.27737387179253,
+  //   lng: -76.83719668008143,
+  //   images: ["assets/chosun1.jpg","assets/blueberry1.jpg"]
+  // },
 
-  {
-    name: "Cafe June",
-    category: "food",
-    blurb: "A cozy cafe serving freshly brewed coffee, pastries, and breakfast favorites.",
-    address: "10039 Baltimore National Pike, Ellicott City, MD 21042",
-    deal: "Buy one latte, get a croissant free on weekdays.",
-    rating: 4.5,
-    lat: 39.27860429569345,
-    lng: -76.85767198145213,
-    images: ["images/cafejune1.jpg","images/cafejune2.jpg"]
-  },
+  // {
+  //   name: "Cafe June",
+  //   category: "food",
+  //   blurb: "A cozy cafe serving freshly brewed coffee, pastries, and breakfast favorites.",
+  //   address: "10039 Baltimore National Pike, Ellicott City, MD 21042",
+  //   deal: "Buy one latte, get a croissant free on weekdays.",
+  //   rating: 4.5,
+  //   lat: 39.27860429569345,
+  //   lng: -76.85767198145213,
+  //   images: ["assets/cafejune1.jpg","assets/cafejune2.jpg"]
+  // },
 
-  {
-    name: "Forget‑Me‑Not Factory",
-    category: "retail",
-    blurb: "Handmade gifts, home décor, and unique souvenirs to cherish forever.",
-    address: "8044 Main St, Ellicott City, MD 21043",
-    deal: "Free gift wrapping with purchases over $50.",
-    rating: 4.5,
-    lat: 39.2678175,
-    lng: -76.79546289999999,
-    images: ["images/forgetmenot1.jpg","images/forgetmenot2.jpg"]
-  },
+  // {
+  //   name: "Forget‑Me‑Not Factory",
+  //   category: "retail",
+  //   blurb: "Handmade gifts, home décor, and unique souvenirs to cherish forever.",
+  //   address: "8044 Main St, Ellicott City, MD 21043",
+  //   deal: "Free gift wrapping with purchases over $50.",
+  //   rating: 4.5,
+  //   lat: 39.2678175,
+  //   lng: -76.79546289999999,
+  //   images: ["assets/forgetmenot1.jpg","assets/forgetmenot2.jpg"]
+  // },
 
-  {
-    name: "Simply the Best Boutique",
-    category: "retail",
-    blurb: "Chic and trendy clothing boutique for women and men with unique styles.",
-    address: "8104 Main St, Ellicott City, MD 21043",
-    deal: "15% off your first purchase in-store.",
-    rating: 5.0,
-    lat: 39.2674953,
-    lng: -76.7965747,
-    images: ["images/simplybest1.jpg","images/simplybest2.jpg"]
-  },
+  // {
+  //   name: "Simply the Best Boutique",
+  //   category: "retail",
+  //   blurb: "Chic and trendy clothing boutique for women and men with unique styles.",
+  //   address: "8104 Main St, Ellicott City, MD 21043",
+  //   deal: "15% off your first purchase in-store.",
+  //   rating: 5.0,
+  //   lat: 39.2674953,
+  //   lng: -76.7965747,
+  //   images: ["assets/simplybest1.jpg","assets/simplybest2.jpg"]
+  // },
 
-  {
-    name: "Tous Les Jours",
-    category: "food",
-    blurb: "French-Asian bakery offering fresh breads, cakes, and desserts daily.",
-    address: "9380 Baltimore National Pike, Ste 111, Ellicott City, MD 21042",
-    deal: "Free mini croissant with orders over $10 on weekends.",
-    rating: 4.3,
-    lat: 39.27829029999999,
-    lng: -76.8347883,
-    images: ["images/touslesjours1.jpg","images/touslesjours2.jpg"]
-  },
+  // {
+  //   name: "Tous Les Jours",
+  //   category: "food",
+  //   blurb: "French-Asian bakery offering fresh breads, cakes, and desserts daily.",
+  //   address: "9380 Baltimore National Pike, Ste 111, Ellicott City, MD 21042",
+  //   deal: "Free mini croissant with orders over $10 on weekends.",
+  //   rating: 4.3,
+  //   lat: 39.27829029999999,
+  //   lng: -76.8347883,
+  //   images: ["assets/touslesjours1.jpg","assets/touslesjours2.jpg"]
+  // },
 
-  {
-    name: "Sweet Elizabeth Jane",
-    category: "retail",
-    blurb: "Stylish clothing and accessories for every occasion, curated locally.",
-    address: "8289 Main St, Ellicott City, MD 21043",
-    deal: "Buy 2 accessories, get 1 free this month.",
-    rating: 4.7,
-    lat: 39.267621399999996,
-    lng: -76.79944569999999,
-    images: ["images/sweetelizabeth1.jpg","images/sweetelizabeth2.jpg"]
-  },
+  // {
+  //   name: "Sweet Elizabeth Jane",
+  //   category: "retail",
+  //   blurb: "Stylish clothing and accessories for every occasion, curated locally.",
+  //   address: "8289 Main St, Ellicott City, MD 21043",
+  //   deal: "Buy 2 accessories, get 1 free this month.",
+  //   rating: 4.7,
+  //   lat: 39.267621399999996,
+  //   lng: -76.79944569999999,
+  //   images: ["assets/sweetelizabeth1.jpg","assets/sweetelizabeth2.jpg"]
+  // },
 
-  {
-    name: "Park Ridge Trading Company",
-    category: "retail",
-    blurb: "Gourmet groceries and specialty foods from around the world.",
-    address: "8080 Main St, Ellicott City, MD 21043",
-    deal: "10% off all imported cheeses on Saturdays.",
-    rating: 4.9,
-    lat: 39.2676197,
-    lng: -76.7961931,
-    images: ["images/parkridge1.jpg","images/parkridge2.jpg"]
-  },
+  // {
+  //   name: "Park Ridge Trading Company",
+  //   category: "retail",
+  //   blurb: "Gourmet groceries and specialty foods from around the world.",
+  //   address: "8080 Main St, Ellicott City, MD 21043",
+  //   deal: "10% off all imported cheeses on Saturdays.",
+  //   rating: 4.9,
+  //   lat: 39.2676197,
+  //   lng: -76.7961931,
+  //   images: ["assets/parkridge1.jpg","assets/parkridge2.jpg"]
+  // },
 
-  {
-    name: "Old Mill Cafe",
-    category: "food",
-    blurb: "Classic American breakfast and brunch spot with hearty sandwiches.",
-    address: "4 Frederick Rd, Ellicott City, MD 21043",
-    deal: "Free coffee refill with any breakfast platter.",
-    rating: 4.4,
-    lat: 39.2678,
-    lng: -76.79318,
-    images: ["images/oldmillcafe1.jpg","images/oldmillcafe2.jpg"]
-  },
+  // {
+  //   name: "Old Mill Cafe",
+  //   category: "food",
+  //   blurb: "Classic American breakfast and brunch spot with hearty sandwiches.",
+  //   address: "4 Frederick Rd, Ellicott City, MD 21043",
+  //   deal: "Free coffee refill with any breakfast platter.",
+  //   rating: 4.4,
+  //   lat: 39.2678,
+  //   lng: -76.79318,
+  //   images: ["assets/oldmillcafe1.jpg","assets/oldmillcafe2.jpg"]
+  // },
 
-  {
-    name: "E.C. Pops",
-    category: "retail",
-    blurb: "Gourmet popcorn, snacks, and sweet treats in a fun family-friendly shop.",
-    address: "3709 Old Columbia Pike, Ellicott City, MD 21043",
-    deal: "Buy 3 pops, get 1 free every Thursday.",
-    rating: 4.7,
-    lat: 39.2671893,
-    lng: -76.7979802,
-    images: ["images/ecpops1.jpg","images/ecpops2.jpg"]
-  },
+  // {
+  //   name: "E.C. Pops",
+  //   category: "retail",
+  //   blurb: "Gourmet popcorn, snacks, and sweet treats in a fun family-friendly shop.",
+  //   address: "3709 Old Columbia Pike, Ellicott City, MD 21043",
+  //   deal: "Buy 3 pops, get 1 free every Thursday.",
+  //   rating: 4.7,
+  //   lat: 39.2671893,
+  //   lng: -76.7979802,
+  //   images: ["assets/ecpops1.jpg","assets/ecpops2.jpg"]
+  // },
 
-  {
-    name: "bb.q Chicken Ellicott City",
-    category: "food",
-    blurb: "Korean-style fried chicken with a variety of sauces and sides.",
-    address: "8801 Baltimore National Pike, Ste K, Ellicott City, MD 21043",
-    deal: "20% off family combo on Mondays.",
-    rating: 4.1,
-    lat: 39.27654577165137,
-    lng: -76.81739337393324,
-    images: ["images/bbqchicken1.jpg","images/bbqchicken2.jpg"]
-  }
+  // {
+  //   name: "bb.q Chicken Ellicott City",
+  //   category: "food",
+  //   blurb: "Korean-style fried chicken with a variety of sauces and sides.",
+  //   address: "8801 Baltimore National Pike, Ste K, Ellicott City, MD 21043",
+  //   deal: "20% off family combo on Mondays.",
+  //   rating: 4.1,
+  //   lat: 39.27654577165137,
+  //   lng: -76.81739337393324,
+  //   images: ["assets/bbqchicken1.jpg","assets/bbqchicken2.jpg"]
+  // }
 
 ];
+// DELETE the entire hardcoded businesses array and replace with this:
 
+async function loadBusinesses() {
+  const { collection, getDocs } = await import("https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js");
+  const snapshot = await getDocs(collection(db, "businesses"));
+  businesses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}
 // Authentication State Listener
 // Watches for login/logout changes and updates the UI accordingly
 onAuthStateChanged(auth, async user => {
@@ -196,6 +202,7 @@ async function getBusinessReviews(name) {
 // Build the list of businesses that should be displayed based on filters and sorting
 async function getCurrentlyDisplayedBusinesses() {
   // Start with a copy of all businesses
+  await loadBusinesses();
   let list = [...businesses];
 
   // Attach user favorites to each business if user is logged in
@@ -257,8 +264,18 @@ async function renderBusinesses(list) {
 
 
     card.innerHTML = `
+    <button class="prev-btn" data-name="${safeName}">‹</button>
+       <img class="card-img" 
+         id="img-${safeName}" 
+         src="${b.images && b.images.length > 0 ? b.images[0] : 'assets/placeholder.jpg'}" 
+         data-index="0">
+      <button class="next-btn" data-name="${safeName}">›</button>
+<div class="card-body">
+ <div class="card-header">
+  <h3>${b.name}</h3> 
   <button class="bookmark-btn" data-name="${b.name}" style="color:${b.favorite ? "#FFD700" : "#bebebe"};">★</button>
-  <h3>${b.name}</h3>
+  </div>
+  
   <p class="blurb">${b.blurb || ""}</p>  <!-- added blurb -->
 
   <p class="deal">${b.deal}</p>
@@ -285,6 +302,7 @@ async function renderBusinesses(list) {
       ${b.reviews.map(r => `<p>⭐${r.stars} — <b>${r.userName}</b>: ${r.text}</p>`).join("")}
     </div>
   </div>
+  </div>
 `;
 
     grid.appendChild(card);
@@ -295,6 +313,7 @@ async function renderBusinesses(list) {
   attachBookmarkEvents();
   attachToggleReviews();
   attachCardButtons(); // <-- new
+  attachCarouselEvents(list);
 }
 
 function attachCardButtons() {
@@ -495,20 +514,20 @@ function openBusinessDetail(b) {
     <button class="close-btn">✕</button>
     <h2>${b.name}</h2>
     <p><b>Address:</b> ${b.address}</p>
-    <p class="blurb">${b.blurb || ""}</p>  <!-- added blurb -->
-
-
+    <p class="blurb">${b.blurb || ""}</p>
     <p><b>Deal:</b> ${b.deal}</p>
     <p>⭐ ${b.rating.toFixed(1)}</p>
     <div class="detail-images">
-      ${(b.images || ["images/sample1.jpg","images/sample2.jpg"]).map(src => `<img src="${src}">`).join("")}
+      ${(b.images && b.images.length > 0 ? b.images : ["assets/placeholder.jpg"]).map(src => `<img src="${src}">`).join("")}
     </div>
     <h3>Reviews</h3>
-    ${b.reviews.map(r => `<p>⭐${r.stars} <b>${r.userName}</b>: ${r.text}</p>`).join("")}
+    ${b.reviews && b.reviews.length > 0 
+      ? b.reviews.map(r => `<p>⭐${r.stars} <b>${r.userName}</b>: ${r.text}</p>`).join("") 
+      : "<p>No reviews yet.</p>"
+    }
   `;
   detail.classList.remove("hidden");
 
-  // Bind close button after creating it
   detail.querySelector(".close-btn").onclick = closeBusinessDetail;
 
   if (b.lat && b.lng) map.setView([b.lat, b.lng], 16);
@@ -522,6 +541,52 @@ function closeBusinessDetail() {
   removeModalOverlay();
 }
 
+function attachCarouselEvents(list){
+
+  document.querySelectorAll(".next-btn").forEach(btn => {
+    btn.onclick = () => {
+
+      const name = btn.dataset.name;
+      const img = document.getElementById(`img-${name}`);
+      const business = list.find(b => b.name.replace(/\s+/g,'') === name);
+      if (!business || !business.images || business.images.length === 0) return; // add this
+
+      let index = parseInt(img.dataset.index);
+      index = (index + 1) % business.images.length;
+
+      img.src = business.images[index];
+      img.dataset.index = index;
+
+    };
+  });
+
+  document.querySelectorAll(".prev-btn").forEach(btn => {
+    btn.onclick = () => {
+
+      const name = btn.dataset.name;
+      const img = document.getElementById(`img-${name}`);
+      const business = list.find(b => b.name.replace(/\s+/g,'') === name);
+      if (!business || !business.images || business.images.length === 0) return; // add this
+      
+
+      let index = parseInt(img.dataset.index);
+      index = (index - 1 + business.images.length) % business.images.length;
+
+      img.src = business.images[index];
+      img.dataset.index = index;
+
+    };
+  });
+
+}
+
 // Initial Render
-initMap();
-renderBusinesses(await getCurrentlyDisplayedBusinesses());
+// Replace the last two lines with:
+async function init() {
+  initMap();
+  await loadBusinesses();
+  console.log("Businesses after load:", businesses); // temp debug
+  renderBusinesses(await getCurrentlyDisplayedBusinesses());
+}
+
+init();
