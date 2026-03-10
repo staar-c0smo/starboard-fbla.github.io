@@ -18,8 +18,12 @@
       color: #2b3a55;
     }
 
+    h1 {
+      margin-top: 15vh;
+    }
+
     .section {
-      background: #f7f7f7;
+      background: #e8ecee;
       padding: 20px;
       border-radius: 10px;
       margin-bottom: 25px;
@@ -31,41 +35,47 @@
     }
 
     header {
-  position: absolute;
-  padding: 2em;
-  z-index: 20;
-  display: flex;
-  justify-content: space-between;
-  top:0px;
-  width: calc(100%-2rem);
-  background: white;
-  gap: 65em;
-}
-header a {
-  text-decoration: none;
-  color: black;
-}
-header a.logo {
-  font-family: 'Outfit', sans-serif;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 30px;
- background: linear-gradient(90deg, #007ede9a, #c300ff80);
-  background-clip:text;
-  -webkit-text-fill-color: transparent;
-}
-header nav ul {
-  list-style-type: none;
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-header nav ul li a {
-  padding: 3em;
-  font-size: 20px;
-}
+      position: absolute;
+      padding: 2em;
+      z-index: 20;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      top: 0px;
+      width: calc(100% - 2rem);
+      background: white;
+    }
+    header a {
+      text-decoration: none;
+      color: black;
+    }
+    header a.logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 30px;
+    background: linear-gradient(90deg, #007ede9a, #c300ff80);
+      background-clip:text;
+      -webkit-text-fill-color: transparent;
+    }
+    header nav ul {
+      list-style-type: none;
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    header nav {
+      margin-left: 0;
+    }
+    header nav ul li a {
+      padding: 0.5em 1em;
+      font-size: 20px;
+    }
+
     /* FAQ Dropdown Styling */
     .faq-item {
       margin-bottom: 12px;
@@ -118,6 +128,38 @@ header nav ul li a {
 </header>
 
 <h1>Help & About</h1>
+
+<div class="section">
+  <h2>Frequently Asked Questions (FAQ)</h2>
+
+  <div class="faq-item">
+    <button class="faq-question">Why can I see businesses without logging in?</button>
+    <div class="faq-answer">
+      <p>Viewing is open to everyone — reviewing and bookmarking require login to prevent spam.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question">How do I edit or delete my review?</button>
+    <div class="faq-answer">
+      <p>At this time, reviews cannot be edited, but an updated rating can be submitted.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question">How are business ratings calculated?</button>
+    <div class="faq-answer">
+      <p>The displayed rating is the <strong>average of all user reviews</strong>.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question">How do I support a business?</button>
+    <div class="faq-answer">
+      <p>Leave a review, bookmark them, and visit the deals they offer!</p>
+    </div>
+  </div>
+</div>
 
 <div class="section">
   <h2>About This Platform</h2>
@@ -178,37 +220,7 @@ header nav ul li a {
   </ul>
 </div>
 
-<div class="section">
-  <h2>Frequently Asked Questions (FAQ)</h2>
 
-  <div class="faq-item">
-    <button class="faq-question">Why can I see businesses without logging in?</button>
-    <div class="faq-answer">
-      <p>Viewing is open to everyone — reviewing and bookmarking require login to prevent spam.</p>
-    </div>
-  </div>
-
-  <div class="faq-item">
-    <button class="faq-question">How do I edit or delete my review?</button>
-    <div class="faq-answer">
-      <p>At this time, reviews cannot be edited, but an updated rating can be submitted.</p>
-    </div>
-  </div>
-
-  <div class="faq-item">
-    <button class="faq-question">How are business ratings calculated?</button>
-    <div class="faq-answer">
-      <p>The displayed rating is the <strong>average of all user reviews</strong>.</p>
-    </div>
-  </div>
-
-  <div class="faq-item">
-    <button class="faq-question">How do I support a business?</button>
-    <div class="faq-answer">
-      <p>Leave a review, bookmark them, and visit the deals they offer!</p>
-    </div>
-  </div>
-</div>
 
 <script>
   // Simple FAQ toggle
